@@ -1,12 +1,22 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
-    <DeptTree class="w-1/4 xl:w-1/5" @select="handleSelect" />
+    <!-- <DeptTree class="w-1/4 xl:w-1/5" @select="handleSelect" /> -->
     <BasicTable @register="registerTable" class="w-3/4 xl:w-4/5" :searchInfo="searchInfo">
       <template #toolbar>
         <a-button type="primary" @click="handleCreate">新增账号</a-button>
       </template>
       <template #bodyCell="{ column, record }">
-        <template v-if="column.key === 'action'">
+        <template v-if="column.key === 'avatar'">
+          <Avatar :size="60" :src="record.avatar" />
+        </template>
+        <template v-else-if="column.key === 'roles'">
+          <template v-for="item in record.roles" :key="item.name">
+            <Tag color="green">
+              {{ item.alias }}
+            </Tag>
+          </template>
+        </template>
+        <template v-else-if="column.key === 'action'">
           <TableAction
             :actions="[
               {
@@ -41,20 +51,23 @@
   import { defineComponent, reactive } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getAccountList } from '/@/api/demo/system';
+  import { getAccountList, deleteAccount } from '/@/api/demo/system';
   import { PageWrapper } from '/@/components/Page';
-  import DeptTree from './DeptTree.vue';
+  // import DeptTree from './DeptTree.vue';
 
   import { useModal } from '/@/components/Modal';
   import AccountModal from './AccountModal.vue';
 
   import { columns, searchFormSchema } from './account.data';
   import { useGo } from '/@/hooks/web/usePage';
-
+  import { Avatar, Tag } from 'ant-design-vue';
+  import { useMessage } from '/@/hooks/web/useMessage';
   export default defineComponent({
     name: 'AccountManagement',
-    components: { BasicTable, PageWrapper, DeptTree, AccountModal, TableAction },
+    // components: { BasicTable, PageWrapper, DeptTree, AccountModal, TableAction },
+    components: { BasicTable, PageWrapper, AccountModal, TableAction, Avatar, Tag },
     setup() {
+      const { createMessage } = useMessage();
       const go = useGo();
       const [registerModal, { openModal }] = useModal();
       const searchInfo = reactive<Recordable>({});
@@ -98,7 +111,18 @@
       }
 
       function handleDelete(record: Recordable) {
-        console.log(record);
+        console.log(record.id);
+        deleteAccount(record.id)
+          .then(() => {
+            createMessage.success(`1`);
+          })
+          .catch(() => {
+            createMessage.error('0');
+          })
+          .finally(() => {
+            reload();
+            console.log(record);
+          });
       }
 
       function handleSuccess({ isUpdate, values }) {
@@ -107,7 +131,9 @@
           // 注意：updateTableDataRecord要求表格的rowKey属性为string并且存在于每一行的record的keys中
           const result = updateTableDataRecord(values.id, values);
           console.log(result);
+          console.log('1');
         } else {
+          console.log('2');
           reload();
         }
       }

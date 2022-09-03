@@ -11,15 +11,23 @@ import {
   RoleListGetResultModel,
 } from './model/systemModel';
 import { defHttp } from '/@/utils/http/axios';
-
+// enum Api {
+//   AccountList = '/system/getAccountList',
+//   IsAccountExist = '/system/accountExist',
+//   DeptList = '/system/getDeptList',
+//   setRoleStatus = '/system/setRoleStatus',
+//   MenuList = '/system/getMenuList',
+//   RolePageList = '/system/getRoleListByPage',
+//   GetAllRoleList = '/system/getAllRoleList',
+// }
 enum Api {
-  AccountList = '/system/getAccountList',
+  AccountList = '/users',
   IsAccountExist = '/system/accountExist',
   DeptList = '/system/getDeptList',
   setRoleStatus = '/system/setRoleStatus',
   MenuList = '/system/getMenuList',
   RolePageList = '/system/getRoleListByPage',
-  GetAllRoleList = '/system/getAllRoleList',
+  GetAllRoleList = '/roles',
 }
 
 export const getAccountList = (params: AccountParams) =>
@@ -42,3 +50,31 @@ export const setRoleStatus = (id: number, status: string) =>
 
 export const isAccountExist = (account: string) =>
   defHttp.post({ url: Api.IsAccountExist, params: { account } }, { errorMessageMode: 'none' });
+
+export const addAccount = (
+  username: string,
+  role: number,
+  email: string,
+  nickname: string,
+  password: string,
+) =>
+  defHttp.post(
+    { url: Api.AccountList, params: { username, role, email, nickname, password } },
+    { errorMessageMode: 'none' },
+  );
+
+export const deleteAccount = (id: number) =>
+  defHttp.delete({ url: Api.AccountList + '/' + id }, { errorMessageMode: 'none' });
+
+export const editAccount = (
+  id: string,
+  username: string,
+  role: number,
+  email: string,
+  nickname: string,
+  password: string,
+) =>
+  defHttp.put(
+    { url: Api.AccountList + '/' + id, params: { username, role, email, nickname, password } },
+    { errorMessageMode: 'none' },
+  );
