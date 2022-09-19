@@ -39,6 +39,8 @@
   import MenuDrawer from './MenuDrawer.vue';
 
   import { columns, searchFormSchema } from './menu.data';
+  import { useMessage } from '/@/hooks/web/useMessage';
+  import { deletePermission } from '/@/api/sbvadmin/system';
 
   export default defineComponent({
     name: 'MenuManagement',
@@ -85,6 +87,18 @@
 
       function handleDelete(record: Recordable) {
         console.log(record);
+        const { createMessage } = useMessage();
+        deletePermission(record.id)
+          .then(() => {
+            createMessage.success(`1`);
+          })
+          .catch(() => {
+            createMessage.error('0');
+          })
+          .finally(() => {
+            reload();
+            console.log(record);
+          });
       }
 
       function handleSuccess() {

@@ -12,7 +12,7 @@
         <BasicTree
           v-model:value="model[field]"
           :treeData="treeData"
-          :fieldNames="{ title: 'menuName', key: 'id' }"
+          :fieldNames="{ title: 'name', key: 'id' }"
           checkable
           toolbar
           title="菜单分配"
@@ -29,6 +29,8 @@
   import { BasicTree, TreeItem } from '/@/components/Tree';
 
   import { getMenuList } from '/@/api/demo/system';
+  import { editRole } from '/@/api/sbvadmin/system';
+  import { useMessage } from '/@/hooks/web/useMessage';
 
   export default defineComponent({
     name: 'RoleDrawer',
@@ -68,6 +70,20 @@
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
           // TODO custom api
+          const { createMessage } = useMessage();
+          if (unref(isUpdate)) {
+            editRole(values)
+              .then(() => {
+                createMessage.success(`1`);
+              })
+              .catch(() => {
+                createMessage.error('2');
+              })
+              .finally(() => {
+                closeDrawer();
+                emit('success');
+              });
+          }
           console.log(values);
           closeDrawer();
           emit('success');

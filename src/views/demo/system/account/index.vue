@@ -3,8 +3,11 @@
     <!-- <DeptTree class="w-1/4 xl:w-1/5" @select="handleSelect" /> -->
     <BasicTable @register="registerTable" class="w-3/4 xl:w-4/5" :searchInfo="searchInfo">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate">新增账号</a-button>
+        <Authority :value="'/api/users|POST'">
+          <a-button type="primary" @click="handleCreate">新增账号</a-button>
+        </Authority>
       </template>
+
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'avatar'">
           <Avatar :size="60" :src="record.avatar" />
@@ -12,7 +15,7 @@
         <template v-else-if="column.key === 'roles'">
           <template v-for="item in record.roles" :key="item.name">
             <Tag color="green">
-              {{ item.alias }}
+              {{ item.nameZh }}
             </Tag>
           </template>
         </template>
@@ -54,7 +57,7 @@
   import { getAccountList, deleteAccount } from '/@/api/demo/system';
   import { PageWrapper } from '/@/components/Page';
   // import DeptTree from './DeptTree.vue';
-
+  import { Authority } from '/@/components/Authority';
   import { useModal } from '/@/components/Modal';
   import AccountModal from './AccountModal.vue';
 
@@ -65,7 +68,7 @@
   export default defineComponent({
     name: 'AccountManagement',
     // components: { BasicTable, PageWrapper, DeptTree, AccountModal, TableAction },
-    components: { BasicTable, PageWrapper, AccountModal, TableAction, Avatar, Tag },
+    components: { BasicTable, PageWrapper, AccountModal, TableAction, Avatar, Tag, Authority },
     setup() {
       const { createMessage } = useMessage();
       const go = useGo();

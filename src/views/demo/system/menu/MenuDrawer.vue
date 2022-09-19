@@ -17,6 +17,8 @@
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
 
   import { getMenuList } from '/@/api/demo/system';
+  import { addPermission, editPermission } from '/@/api/sbvadmin/system';
+  import { useMessage } from '/@/hooks/web/useMessage';
 
   export default defineComponent({
     name: 'MenuDrawer',
@@ -44,7 +46,7 @@
         }
         const treeData = await getMenuList();
         updateSchema({
-          field: 'parentMenu',
+          field: 'pid',
           componentProps: { treeData },
         });
       });
@@ -57,8 +59,35 @@
           setDrawerProps({ confirmLoading: true });
           // TODO custom api
           console.log(values);
-          closeDrawer();
-          emit('success');
+          const { createMessage } = useMessage();
+          if (unref(isUpdate)) {
+            editPermission(values)
+              .then(() => {
+                createMessage.success(`1`);
+              })
+              .catch(() => {
+                createMessage.error('2');
+              })
+              .finally(() => {
+                closeDrawer();
+                emit('success');
+              });
+          } else {
+            addPermission(values)
+              .then(() => {
+                createMessage.success(`3`);
+              })
+              .catch(() => {
+                createMessage.error('4');
+              })
+              .finally(() => {
+                closeDrawer();
+                emit('success');
+              });
+          }
+
+          // closeDrawer();
+          // emit('success');
         } finally {
           setDrawerProps({ confirmLoading: false });
         }
