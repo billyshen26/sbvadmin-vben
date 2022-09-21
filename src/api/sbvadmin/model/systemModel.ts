@@ -2,12 +2,12 @@
 export interface UserItem {
   id: number;
   name: string;
-  username: any;
-  avatar?: string;
-  last_login_at?: string;
-  last_login_ip?: string;
-  enabled?: boolean;
-  locked?: boolean;
+  username: string;
+  avatar: string;
+  last_login_at: string;
+  last_login_ip: string;
+  enabled: boolean;
+  locked: boolean;
 }
 
 // 权限模型

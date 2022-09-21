@@ -9,7 +9,8 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { accountFormSchema } from './account.data';
   // import { getDeptList } from '/@/api/demo/system';
-  import { addAccount, editAccount } from '/@/api/demo/system';
+  import { editAccount } from '/@/api/demo/system';
+  import { addUser } from '/@/api/sbvadmin/system';
   import { useMessage } from '/@/hooks/web/useMessage';
 
   export default defineComponent({
@@ -87,7 +88,22 @@
                 });
               });
           } else {
-            addAccount(values.username, values.role, values.email, values.nickname, values.password)
+            // addAccount(values.username, values.role, values.email, values.nickname, values.password)
+            //   .then(() => {
+            //     createMessage.success(`1`);
+            //   })
+            //   .catch(() => {
+            //     createMessage.error('0');
+            //   })
+            //   .finally(() => {
+            //     console.log(values);
+            //     closeModal();
+            //     emit('success', {
+            //       isUpdate: unref(isUpdate),
+            //       values: { ...values, id: rowId.value },
+            //     });
+            //   });
+            addUser(values)
               .then(() => {
                 createMessage.success(`1`);
               })

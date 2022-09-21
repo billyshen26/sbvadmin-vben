@@ -88,9 +88,10 @@ export const accountFormSchema: FormSchema[] = [
   },
   {
     label: '角色',
-    field: 'role',
+    field: 'roleIds',
     component: 'ApiSelect',
     componentProps: {
+      mode: 'multiple',
       api: getAllRoleList,
       labelField: 'nameZh',
       valueField: 'id',

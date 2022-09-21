@@ -1,5 +1,6 @@
 import { defHttp } from '/@/utils/http/axios';
 import {
+  UserItem,
   getUserListResultModel,
   PermissionItem,
   getRoleListResultModel,
@@ -7,18 +8,19 @@ import {
 } from './model/systemModel';
 
 enum Api {
-  GetUserList = '/users',
+  Users = '/users',
   Permissions = '/permissions',
   Roles = '/roles',
 }
 
 /**
- * @description: Get users
+ * @description: 用户账号相关
  */
 
 export const getUserList = () => {
-  return defHttp.get<getUserListResultModel>({ url: Api.GetUserList });
+  return defHttp.get<getUserListResultModel>({ url: Api.Users });
 };
+export const addUser = (data: UserItem) => defHttp.post<UserItem>({ url: Api.Users, data });
 
 /**
  * @description: 权限相关
