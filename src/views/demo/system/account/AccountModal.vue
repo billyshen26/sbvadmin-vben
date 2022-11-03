@@ -73,7 +73,8 @@
               values.nickname,
               values.password,
             )
-              .then(() => {
+              .then((res) => {
+                console.log(res);
                 createMessage.success(`2`);
               })
               .catch(() => {

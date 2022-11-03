@@ -116,11 +116,11 @@
       function handleDelete(record: Recordable) {
         console.log(record.id);
         deleteAccount(record.id)
-          .then(() => {
-            createMessage.success(`1`);
+          .then((res) => {
+            createMessage.success(res.message);
           })
-          .catch(() => {
-            createMessage.error('0');
+          .catch((res) => {
+            createMessage.error(res.message);
           })
           .finally(() => {
             reload();
