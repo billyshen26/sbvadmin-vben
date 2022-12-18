@@ -33,12 +33,14 @@
   import { defineComponent, nextTick } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getMenuList } from '/@/api/demo/system';
-
+  // import { getMenuList } from '/@/api/sbvadmin/system';
+  import { getPermissionList, deletePermission } from '/@/api/sbvadmin/System';
   import { useDrawer } from '/@/components/Drawer';
   import MenuDrawer from './MenuDrawer.vue';
 
   import { columns, searchFormSchema } from './menu.data';
+  import { useMessage } from '/@/hooks/web/useMessage';
+  // import { deletePermission } from '/@/api/sbvadmin/System';
 
   export default defineComponent({
     name: 'MenuManagement',
@@ -47,7 +49,7 @@
       const [registerDrawer, { openDrawer }] = useDrawer();
       const [registerTable, { reload, expandAll }] = useTable({
         title: '菜单列表',
-        api: getMenuList,
+        api: getPermissionList,
         columns,
         formConfig: {
           labelWidth: 120,
@@ -85,6 +87,18 @@
 
       function handleDelete(record: Recordable) {
         console.log(record);
+        const { createMessage } = useMessage();
+        deletePermission(record.id)
+          .then(() => {
+            createMessage.success(`1`);
+          })
+          .catch(() => {
+            createMessage.error('0');
+          })
+          .finally(() => {
+            reload();
+            console.log(record);
+          });
       }
 
       function handleSuccess() {

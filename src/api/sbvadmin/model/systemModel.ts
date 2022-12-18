@@ -1,5 +1,6 @@
+import { BasicPageParams, BasicFetchResult } from '/@/api/model/baseModel';
 // 用户模型
-export interface UserItem {
+export interface User {
   id: number;
   name: string;
   username: string;
@@ -11,7 +12,7 @@ export interface UserItem {
 }
 
 // 权限模型
-export interface PermissionItem {
+export interface Permission {
   id: number;
   pid: number;
   requestUrl: string;
@@ -28,7 +29,7 @@ export interface PermissionItem {
 }
 
 // 角色模型
-export interface RoleItem {
+export interface Role {
   id: number;
   name: string;
   nameZh: string;
@@ -38,8 +39,23 @@ export interface RoleItem {
   menu: number[];
 }
 
+export type UserParams = BasicPageParams & {
+  id: number;
+  createdAt: string;
+};
+
+export type RoleParams = BasicPageParams & {
+  id: number;
+  createdAt: string;
+};
+
+export type PermissionParams = BasicPageParams & {
+  id: number;
+  createdAt: string;
+};
 /**
  * @description: Get user return value
  */
-export type getUserListResultModel = UserItem[];
-export type getRoleListResultModel = RoleItem[];
+export type UserList = BasicFetchResult<User>;
+export type RoleList = BasicFetchResult<Role>;
+export type PermissionList = BasicFetchResult<Permission>;

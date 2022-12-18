@@ -12,7 +12,7 @@
         <BasicTree
           v-model:value="model[field]"
           :treeData="treeData"
-          :fieldNames="{ title: 'menuName', key: 'id' }"
+          :fieldNames="{ title: 'name', key: 'id' }"
           checkable
           toolbar
           title="菜单分配"
@@ -27,9 +27,11 @@
   import { formSchema } from './role.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { BasicTree, TreeItem } from '/@/components/Tree';
-
-  import { getMenuList } from '/@/api/demo/system';
-
+  import { getPermissionList, editRole } from '/@/api/sbvadmin/System';
+  // import { getMenuList } from '/@/api/demo/system';
+  // import { editRole } from '/@/api/sbvadmin/System';
+  import { useMessage } from '/@/hooks/web/useMessage';
+  import { PermissionParams } from '/@/api/sbvadmin/model/SystemModel';
   export default defineComponent({
     name: 'RoleDrawer',
     components: { BasicDrawer, BasicForm, BasicTree },
@@ -50,7 +52,8 @@
         setDrawerProps({ confirmLoading: false });
         // 需要在setFieldsValue之前先填充treeData，否则Tree组件可能会报key not exist警告
         if (unref(treeData).length === 0) {
-          treeData.value = (await getMenuList()) as any as TreeItem[];
+          const param = {} as PermissionParams;
+          treeData.value = (await getPermissionList(param)) as any as TreeItem[];
         }
         isUpdate.value = !!data?.isUpdate;
 
@@ -68,6 +71,20 @@
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
           // TODO custom api
+          const { createMessage } = useMessage();
+          if (unref(isUpdate)) {
+            editRole(values)
+              .then(() => {
+                createMessage.success(`1`);
+              })
+              .catch(() => {
+                createMessage.error('2');
+              })
+              .finally(() => {
+                closeDrawer();
+                emit('success');
+              });
+          }
           console.log(values);
           closeDrawer();
           emit('success');

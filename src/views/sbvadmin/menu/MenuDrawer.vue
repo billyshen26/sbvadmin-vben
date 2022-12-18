@@ -15,8 +15,10 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './menu.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-
-  import { getMenuList } from '/@/api/demo/system';
+  import { PermissionParams } from '/@/api/sbvadmin/model/SystemModel';
+  // import { getMenuList } from '/@/api/demo/system';
+  import { getPermissionList, addPermission, editPermission } from '/@/api/sbvadmin/System';
+  import { useMessage } from '/@/hooks/web/useMessage';
 
   export default defineComponent({
     name: 'MenuDrawer',
@@ -42,9 +44,10 @@
             ...data.record,
           });
         }
-        const treeData = await getMenuList();
+        const param = {} as PermissionParams;
+        const treeData = await getPermissionList(param);
         updateSchema({
-          field: 'parentMenu',
+          field: 'pid',
           componentProps: { treeData },
         });
       });
@@ -57,8 +60,35 @@
           setDrawerProps({ confirmLoading: true });
           // TODO custom api
           console.log(values);
-          closeDrawer();
-          emit('success');
+          const { createMessage } = useMessage();
+          if (unref(isUpdate)) {
+            editPermission(values)
+              .then(() => {
+                createMessage.success(`1`);
+              })
+              .catch(() => {
+                createMessage.error('2');
+              })
+              .finally(() => {
+                closeDrawer();
+                emit('success');
+              });
+          } else {
+            addPermission(values)
+              .then(() => {
+                createMessage.success(`3`);
+              })
+              .catch(() => {
+                createMessage.error('4');
+              })
+              .finally(() => {
+                closeDrawer();
+                emit('success');
+              });
+          }
+
+          // closeDrawer();
+          // emit('success');
         } finally {
           setDrawerProps({ confirmLoading: false });
         }
