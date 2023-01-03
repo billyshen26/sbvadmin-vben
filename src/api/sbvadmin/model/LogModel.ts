@@ -11,6 +11,7 @@ export interface Log {
   method: string;
   uri: string;
   ip: string;
+  address: string;
   version: string;
   createdAt: string;
   updatedAt: string;

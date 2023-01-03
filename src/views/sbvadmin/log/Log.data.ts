@@ -44,6 +44,10 @@ export const columns: BasicColumn[] = [
     dataIndex: 'ip',
   },
   {
+    title: '请求地址',
+    dataIndex: 'address',
+  },
+  {
     title: '版本号',
     dataIndex: 'version',
   },
