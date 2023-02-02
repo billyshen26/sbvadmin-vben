@@ -1,5 +1,6 @@
 // import { getAllRoleList, isAccountExist } from '/@/api/demo/system';
-import { getAllRoleList } from '/@/api/demo/system';
+// import { getAllRoleList } from '/@/api/demo/system';
+import { getRoleList } from '/@/api/sbvadmin/System';
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 
@@ -104,7 +105,7 @@ export const accountFormSchema: FormSchema[] = [
     component: 'ApiSelect',
     componentProps: {
       mode: 'multiple',
-      api: getAllRoleList,
+      api: getRoleList,
       labelField: 'nameZh',
       valueField: 'id',
     },

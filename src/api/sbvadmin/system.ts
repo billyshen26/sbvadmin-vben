@@ -15,6 +15,7 @@ enum Api {
   Users = '/users',
   Permissions = '/permissions',
   Roles = '/roles',
+  UserInfo = '/users/info',
 }
 
 /**
@@ -28,7 +29,7 @@ enum Api {
 export const getUserList = (params: UserParams) =>
   defHttp.get<UserList>({ url: Api.Users, params });
 export const addUser = (data: User) => defHttp.post<User>({ url: Api.Users, data });
-export const editUser = (data: User) => defHttp.put<User>({ url: Api.Users + '/' + data.id, data });
+export const editUser = (data: any) => defHttp.put<User>({ url: Api.Users + '/' + data.id, data });
 export const deleteUser = (id: number) => defHttp.delete({ url: Api.Users + '/' + id });
 
 /**
@@ -49,3 +50,8 @@ export const getRoleList = (params: RoleParams) =>
 export const setRoleStatus = (id: number, status: number) =>
   defHttp.put({ url: Api.Roles + '/' + id, params: { status } });
 export const editRole = (data: Role) => defHttp.put<Role>({ url: Api.Roles + '/' + data.id, data });
+
+/**
+ * @description: 个人信息相关
+ */
+export const geUserInfo = () => defHttp.get<User>({ url: Api.UserInfo });

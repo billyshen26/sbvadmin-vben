@@ -12,6 +12,11 @@
     <template #overlay>
       <Menu @click="handleMenuClick">
         <MenuItem
+          key="user"
+          :text="t('layout.header.dropdownItemUserCenter')"
+          icon="ant-design:user-outlined"
+        />
+        <MenuItem
           key="doc"
           :text="t('layout.header.dropdownItemDoc')"
           icon="ion:document-text-outline"
@@ -54,8 +59,9 @@
   import { openWindow } from '/@/utils';
 
   import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
+  import { useGo } from '/@/hooks/web/usePage';
 
-  type MenuEvent = 'logout' | 'doc' | 'lock';
+  type MenuEvent = 'logout' | 'doc' | 'lock' | 'user';
 
   export default defineComponent({
     name: 'UserDropdown',
@@ -70,6 +76,7 @@
       theme: propTypes.oneOf(['dark', 'light']),
     },
     setup() {
+      const go = useGo();
       const { prefixCls } = useDesign('header-user-dropdown');
       const { t } = useI18n();
       const { getShowDoc, getUseLockPage } = useHeaderSetting();
@@ -96,6 +103,11 @@
         openWindow(DOC_URL);
       }
 
+      // go to user center
+      function goUserCenter() {
+        go('/user-center');
+      }
+
       function handleMenuClick(e: MenuInfo) {
         switch (e.key as MenuEvent) {
           case 'logout':
@@ -106,6 +118,9 @@
             break;
           case 'lock':
             handleLock();
+            break;
+          case 'user':
+            goUserCenter();
             break;
         }
       }
