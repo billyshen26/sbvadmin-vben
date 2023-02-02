@@ -77,6 +77,11 @@
         if (isFunction(compProps)) {
           compProps = compProps({ text: val, record, column, index }) ?? {};
         }
+
+        // 用临时变量存储 onChange方法 用于 handleChange方法 获取，并删除原始onChange, 防止存在两个 onChange
+        compProps.onChangeTemp = compProps.onChange;
+        delete compProps.onChange;
+
         const component = unref(getComponent);
         const apiSelectProps: Recordable = {};
         if (component === 'ApiSelect') {
@@ -187,7 +192,7 @@
         } else if (isString(e) || isBoolean(e) || isNumber(e) || isArray(e)) {
           currentValueRef.value = e;
         }
-        const onChange = unref(getComponentProps)?.onChange;
+        const onChange = unref(getComponentProps)?.onChangeTemp;
         if (onChange && isFunction(onChange)) onChange(...arguments);
 
         table.emit?.('edit-change', {
@@ -195,10 +200,10 @@
           value: unref(currentValueRef),
           record: toRaw(props.record),
         });
-        handleSubmiRule();
+        handleSubmitRule();
       }
 
-      async function handleSubmiRule() {
+      async function handleSubmitRule() {
         const { column, record } = props;
         const { editRule } = column;
         const currentValue = unref(currentValueRef);
@@ -228,7 +233,7 @@
 
       async function handleSubmit(needEmit = true, valid = true) {
         if (valid) {
-          const isPass = await handleSubmiRule();
+          const isPass = await handleSubmitRule();
           if (!isPass) return false;
         }
 
@@ -340,7 +345,7 @@
 
       if (props.record) {
         initCbs('submitCbs', handleSubmit);
-        initCbs('validCbs', handleSubmiRule);
+        initCbs('validCbs', handleSubmitRule);
         initCbs('cancelCbs', handleCancel);
 
         if (props.column.dataIndex) {
