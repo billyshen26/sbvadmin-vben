@@ -35,20 +35,20 @@
         resetFields();
         setModalProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
-
+        console.log(data);
         if (unref(isUpdate)) {
           rowId.value = data.record.id;
           setFieldsValue({
             ...data.record,
           });
         }
-
-        // const treeData = await getDeptList();
+        // const treeData: Array<Number> = [1, 2];
         updateSchema([
           {
             field: 'pwd',
             show: !unref(isUpdate),
           },
+
           // {
           //   field: 'dept',
           //   componentProps: { treeData },

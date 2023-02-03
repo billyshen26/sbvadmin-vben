@@ -8,6 +8,7 @@ export interface LoginParams {
 
 export interface RoleInfo {
   roleName: string;
+  nameZh: string; // 兼容后端
   value: string;
 }
 

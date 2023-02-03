@@ -5,24 +5,34 @@
         <BasicForm @register="register" />
       </a-col>
       <a-col :span="10">
-        <div class="change-avatar">
-          <div class="mb-2">头像</div>
-          <CropperAvatar
-            :uploadApi="uploadApi"
-            :value="avatar"
-            btnText="更换头像"
-            :btnProps="{ preIcon: 'ant-design:cloud-upload-outlined' }"
-            @change="updateAvatar"
-            width="150"
-          />
-        </div>
+        <Divider>账号角色</Divider>
+        <a-row :gutter="24">
+          <template v-for="item in roles" :key="item.value">
+            <Tag color="green">
+              {{ item.nameZh }}
+            </Tag>
+          </template>
+        </a-row>
+        <Divider>头像</Divider>
+        <a-row :gutter="24">
+          <div class="change-avatar">
+            <CropperAvatar
+              :uploadApi="uploadApi"
+              :value="avatar"
+              btnText="更换头像"
+              :btnProps="{ preIcon: 'ant-design:cloud-upload-outlined' }"
+              @change="updateAvatar"
+              width="150"
+            />
+          </div>
+        </a-row>
       </a-col>
     </a-row>
     <Button type="primary" @click="handleSubmit"> 更新基本信息 </Button>
   </CollapseContainer>
 </template>
 <script lang="ts">
-  import { Button, Row, Col } from 'ant-design-vue';
+  import { Tag, Button, Row, Col, Divider } from 'ant-design-vue';
   import { computed, defineComponent, onMounted } from 'vue';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { CollapseContainer } from '/@/components/Container';
@@ -40,12 +50,14 @@
 
   export default defineComponent({
     components: {
+      Tag,
       BasicForm,
       CollapseContainer,
       Button,
       ARow: Row,
       ACol: Col,
       CropperAvatar,
+      Divider,
     },
     setup() {
       const { createMessage } = useMessage();
@@ -67,13 +79,18 @@
         return avatar || headerImg;
       });
 
-      function updateAvatar({ data }) {
+      const roles = computed(() => {
+        const { roles } = userStore.getUserInfo;
+        console.log(roles);
+        return roles || [];
+      });
+
+      function updateAvatar({ source, data }) {
         const userinfo = userStore.getUserInfo;
         userinfo.avatar = data.result;
         userStore.setUserInfo(userinfo);
         editUser(userinfo)
-          .then((res: any) => {
-            console.log(res);
+          .then(() => {
             createMessage.success('修改成功!');
           })
           .catch(() => {
@@ -82,7 +99,7 @@
           .finally(() => {
             console.log(data);
           });
-        console.log('data', data);
+        console.log('source', source);
       }
 
       async function handleSubmit() {
@@ -102,6 +119,7 @@
 
       return {
         avatar,
+        roles,
         register,
         uploadApi: uploadApi as any,
         updateAvatar,
