@@ -87,9 +87,15 @@
 
       function updateAvatar({ source, data }) {
         const userinfo = userStore.getUserInfo;
-        userinfo.avatar = data.result;
-        userStore.setUserInfo(userinfo);
-        editUser(userinfo)
+        userinfo.avatar = source;
+        userStore.setUserInfo(userinfo); // 显示直接使用二进制流
+        // userinfo.avatar = data.result; // 更新使用url地址
+        const userAvatar = {
+          id: userinfo.userId,
+          avatar: data.result,
+        };
+
+        editUser(userAvatar)
           .then(() => {
             createMessage.success('修改成功!');
           })
