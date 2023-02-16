@@ -65,13 +65,11 @@
   import { columns, searchFormSchema } from './user.data';
   import { useGo } from '/@/hooks/web/usePage';
   import { Avatar, Tag } from 'ant-design-vue';
-  import { useMessage } from '/@/hooks/web/useMessage';
   export default defineComponent({
     name: 'AccountManagement',
     // components: { BasicTable, PageWrapper, DeptTree, AccountModal, TableAction },
     components: { BasicTable, PageWrapper, AccountModal, TableAction, Avatar, Tag, Authority },
     setup() {
-      const { createMessage } = useMessage();
       const go = useGo();
       const [registerModal, { openModal }] = useModal();
       const searchInfo = reactive<Recordable>({});
@@ -118,10 +116,10 @@
         console.log(record.id);
         deleteUser(record.id)
           .then((res) => {
-            createMessage.success(res.message);
+            console.log(res);
           })
           .catch((res) => {
-            createMessage.error(res.message);
+            console.log(res);
           })
           .finally(() => {
             reload();

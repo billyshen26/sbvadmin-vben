@@ -7,7 +7,8 @@
             <template #title>
               {{ item.title }}
               <div class="extra" v-if="item.extra">
-                {{ item.extra }}
+                <!-- {{ item.extra }} -->
+                <a-button type="primary" @click="handleEdit">更改密码</a-button>
               </div>
             </template>
             <template #description>
@@ -17,19 +18,41 @@
         </ListItem>
       </template>
     </List>
+    <PasswordModal @register="registerModal" />
   </CollapseContainer>
 </template>
 <script lang="ts">
   import { List } from 'ant-design-vue';
   import { defineComponent } from 'vue';
   import { CollapseContainer } from '/@/components/Container/index';
-
+  import { useModal } from '/@/components/Modal';
   import { secureSettingList } from './data';
+  import PasswordModal from './PasswordModal.vue';
 
   export default defineComponent({
-    components: { CollapseContainer, List, ListItem: List.Item, ListItemMeta: List.Item.Meta },
+    components: {
+      CollapseContainer,
+      List,
+      ListItem: List.Item,
+      ListItemMeta: List.Item.Meta,
+      PasswordModal,
+    },
     setup() {
+      const [registerModal, { openModal }] = useModal();
+      function handleEdit() {
+        openModal(true, {
+          isUpdate: true,
+        });
+      }
+
+      // function handleSuccess() {
+      //   console.log('1');
+      // }
+
       return {
+        registerModal,
+        handleEdit,
+        // handleSuccess,
         list: secureSettingList,
       };
     },

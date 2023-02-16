@@ -254,6 +254,7 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
           formatDate: true,
           // 消息提示类型
           errorMessageMode: 'message',
+          successMessageMode: 'message', // add by sbvadmin
           // 接口地址
           apiUrl: globSetting.apiUrl,
           // 接口拼接地址

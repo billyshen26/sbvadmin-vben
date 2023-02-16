@@ -68,10 +68,9 @@
             editUser(values)
               .then((res) => {
                 console.log(res);
-                createMessage.success(`2`);
               })
-              .catch(() => {
-                createMessage.error('3');
+              .catch((res) => {
+                console.log(res);
               })
               .finally(() => {
                 console.log(values);

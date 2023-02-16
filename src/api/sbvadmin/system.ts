@@ -31,6 +31,8 @@ export const getUserList = (params: UserParams) =>
 export const addUser = (data: User) => defHttp.post<User>({ url: Api.Users, data });
 export const editUser = (data: any) => defHttp.put<User>({ url: Api.Users + '/' + data.id, data });
 export const deleteUser = (id: number) => defHttp.delete({ url: Api.Users + '/' + id });
+export const changePassword = (data: any) =>
+  defHttp.post<User>({ url: Api.Users + '/changePassword', data });
 
 /**
  * @description: 权限相关
