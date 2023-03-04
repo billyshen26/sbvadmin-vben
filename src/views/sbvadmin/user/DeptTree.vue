@@ -1,13 +1,13 @@
 <template>
   <div class="m-4 mr-0 overflow-hidden bg-white">
     <BasicTree
-      title="部门列表"
+      title="机构列表"
       toolbar
       search
       treeWrapperClassName="h-[calc(100%-35px)] overflow-auto"
       :clickRowToExpand="false"
       :treeData="treeData"
-      :fieldNames="{ key: 'id', title: 'deptName' }"
+      :fieldNames="{ key: 'id', title: 'name' }"
       @select="handleSelect"
     />
   </div>
@@ -16,7 +16,8 @@
   import { defineComponent, onMounted, ref } from 'vue';
 
   import { BasicTree, TreeItem } from '/@/components/Tree';
-  import { getDeptList } from '/@/api/demo/system';
+  import { getDeptList } from '/@/api/sbvadmin/Dept';
+  import { DeptParams } from '/@/api/sbvadmin/model/DeptModel';
 
   export default defineComponent({
     name: 'DeptTree',
@@ -27,7 +28,8 @@
       const treeData = ref<TreeItem[]>([]);
 
       async function fetch() {
-        treeData.value = (await getDeptList()) as unknown as TreeItem[];
+        const param = {} as DeptParams; // 空入参
+        treeData.value = (await getDeptList(param)) as unknown as TreeItem[];
       }
 
       function handleSelect(keys) {

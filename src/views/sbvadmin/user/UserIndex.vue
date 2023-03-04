@@ -1,6 +1,6 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
-    <!-- <DeptTree class="w-1/4 xl:w-1/5" @select="handleSelect" /> -->
+    <DeptTree class="w-1/4 xl:w-1/5" @select="handleSelect" />
     <BasicTable @register="registerTable" class="w-3/4 xl:w-4/5" :searchInfo="searchInfo">
       <template #toolbar>
         <Authority :value="'/api/users|POST'">
@@ -16,6 +16,13 @@
           <template v-for="item in record.roles" :key="item.name">
             <Tag color="green">
               {{ item.nameZh }}
+            </Tag>
+          </template>
+        </template>
+        <template v-else-if="column.key === 'depts'">
+          <template v-for="item in record.depts" :key="item.id">
+            <Tag color="green">
+              {{ item.name }}
             </Tag>
           </template>
         </template>
@@ -57,7 +64,7 @@
   // import { getAccountList, deleteAccount } from '/@/api/demo/system';
   import { getUserList, deleteUser } from '/@/api/sbvadmin/System';
   import { PageWrapper } from '/@/components/Page';
-  // import DeptTree from './DeptTree.vue';
+  import DeptTree from './DeptTree.vue';
   import { Authority } from '/@/components/Authority';
   import { useModal } from '/@/components/Modal';
   import AccountModal from './UserModal.vue';
@@ -68,7 +75,16 @@
   export default defineComponent({
     name: 'AccountManagement',
     // components: { BasicTable, PageWrapper, DeptTree, AccountModal, TableAction },
-    components: { BasicTable, PageWrapper, AccountModal, TableAction, Avatar, Tag, Authority },
+    components: {
+      BasicTable,
+      PageWrapper,
+      AccountModal,
+      TableAction,
+      Avatar,
+      Tag,
+      Authority,
+      DeptTree,
+    },
     setup() {
       const go = useGo();
       const [registerModal, { openModal }] = useModal();

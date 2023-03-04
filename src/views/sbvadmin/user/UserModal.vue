@@ -8,10 +8,11 @@
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { accountFormSchema } from './user.data';
+  import { getDeptList } from '/@/api/sbvadmin/Dept';
+  import { DeptParams } from '/@/api/sbvadmin/model/DeptModel';
   // import { getDeptList } from '/@/api/demo/system';
   // import { editAccount } from '/@/api/demo/system';
   import { addUser, editUser } from '/@/api/sbvadmin/System';
-  import { useMessage } from '/@/hooks/web/useMessage';
 
   export default defineComponent({
     name: 'AccountModal',
@@ -42,17 +43,18 @@
             ...data.record,
           });
         }
-        // const treeData: Array<Number> = [1, 2];
+        const param = {} as DeptParams; // 空入参
+        const treeData = await getDeptList(param);
         updateSchema([
           {
             field: 'pwd',
             show: !unref(isUpdate),
           },
 
-          // {
-          //   field: 'dept',
-          //   componentProps: { treeData },
-          // },
+          {
+            field: 'deptIds',
+            componentProps: { treeData },
+          },
         ]);
       });
 
@@ -62,8 +64,6 @@
         try {
           const values = await validate();
           setModalProps({ confirmLoading: true });
-          // TODO custom api
-          const { createMessage } = useMessage();
           if (unref(isUpdate)) {
             editUser(values)
               .then((res) => {
@@ -81,30 +81,14 @@
                 });
               });
           } else {
-            // addAccount(values.username, values.role, values.email, values.nickname, values.password)
-            //   .then(() => {
-            //     createMessage.success(`1`);
-            //   })
-            //   .catch(() => {
-            //     createMessage.error('0');
-            //   })
-            //   .finally(() => {
-            //     console.log(values);
-            //     closeModal();
-            //     emit('success', {
-            //       isUpdate: unref(isUpdate),
-            //       values: { ...values, id: rowId.value },
-            //     });
-            //   });
             addUser(values)
-              .then(() => {
-                createMessage.success(`1`);
+              .then((res) => {
+                console.log(res);
               })
-              .catch(() => {
-                createMessage.error('0');
+              .catch((res) => {
+                console.log(res);
               })
               .finally(() => {
-                console.log(values);
                 closeModal();
                 emit('success', {
                   isUpdate: unref(isUpdate),

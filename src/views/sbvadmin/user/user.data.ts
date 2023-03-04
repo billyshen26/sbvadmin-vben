@@ -36,6 +36,11 @@ export const columns: BasicColumn[] = [
     width: 200,
   },
   {
+    title: '机构',
+    dataIndex: 'depts',
+    width: 200,
+  },
+  {
     title: '最后登录时间',
     dataIndex: 'lastLoginAt',
   },
@@ -111,20 +116,21 @@ export const accountFormSchema: FormSchema[] = [
     },
     required: true,
   },
-  // {
-  //   field: 'dept',
-  //   label: '所属部门',
-  //   component: 'TreeSelect',
-  //   componentProps: {
-  //     fieldNames: {
-  //       label: 'deptName',
-  //       key: 'id',
-  //       value: 'id',
-  //     },
-  //     getPopupContainer: () => document.body,
-  //   },
-  //   required: true,
-  // },
+  {
+    field: 'deptIds',
+    label: '所属部门',
+    component: 'TreeSelect',
+    componentProps: {
+      multiple: true,
+      fieldNames: {
+        label: 'name',
+        key: 'id',
+        value: 'id',
+      },
+      getPopupContainer: () => document.body,
+    },
+    required: true,
+  },
   {
     field: 'nickname',
     label: '昵称',

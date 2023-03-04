@@ -8,7 +8,6 @@
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { changePassword } from '/@/api/sbvadmin/System';
-  import { useMessage } from '/@/hooks/web/useMessage';
   import { useUserStore } from '/@/store/modules/user';
   import { formSchema } from './pwd.data';
 
@@ -38,7 +37,6 @@
 
       async function handleSubmit() {
         try {
-          const { createMessage } = useMessage();
           const values = await validate();
           const { passwordOld, passwordNew } = values;
           const userinfo = userStore.getUserInfo;
