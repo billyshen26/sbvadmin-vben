@@ -12,6 +12,7 @@ interface NavItem {
   title: string;
   icon: string;
   color: string;
+  route: string;
 }
 
 interface DynamicInfoItem {
@@ -26,31 +27,37 @@ export const navItems: NavItem[] = [
     title: '首页',
     icon: 'ion:home-outline',
     color: '#1fdaca',
+    route: '/dashboard/workbench',
   },
   {
-    title: '仪表盘',
+    title: '用户管理',
     icon: 'ion:grid-outline',
     color: '#bf0c2c',
+    route: '/system/account',
   },
   {
-    title: '组件',
+    title: '菜单管理',
     icon: 'ion:layers-outline',
     color: '#e18525',
+    route: '/system/menu',
   },
   {
-    title: '系统管理',
+    title: '角色管理',
     icon: 'ion:settings-outline',
     color: '#3fb27f',
+    route: '/system/role',
   },
   {
-    title: '权限管理',
+    title: '日志管理',
     icon: 'ion:key-outline',
     color: '#4daf1bc9',
+    route: '/log',
   },
   {
-    title: '图表',
+    title: '机构管理',
     icon: 'ion:bar-chart-outline',
     color: '#00d8ff',
+    route: '/dept',
   },
 ];
 
