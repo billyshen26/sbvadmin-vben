@@ -68,7 +68,7 @@ export default {
     forgetFormTitle: '重置密码',
 
     signInTitle: 'SBVADMIN 后台管理系统',
-    signInDesc: '一个基于SpringBoot和Vue（Vben）的前后端脚手架2',
+    signInDesc: '一个基于SpringBoot和Vue（Vben）的前后端脚手架',
     policy: '我同意xxx隐私政策',
     scanSign: `扫码后点击"确认"，即可完成登录`,
 
