@@ -6,12 +6,12 @@
   <div class="anticon" :class="getAppLogoClass" @click="goHome">
     <img src="../../../assets/images/logo.png" />
     <div class="ml-2 truncate md:opacity-100" :class="getTitleClass" v-show="showTitle">
-      {{ title }}
+      {{ titleFromConfig }}
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-  import { computed, unref } from 'vue';
+  import { computed, unref, ref } from 'vue';
   import { useGlobSetting } from '/@/hooks/setting';
   import { useGo } from '/@/hooks/web/usePage';
   import { useMenuSetting } from '/@/hooks/setting/useMenuSetting';
@@ -38,7 +38,9 @@
   const { prefixCls } = useDesign('app-logo');
   const { getCollapsedShowTitle } = useMenuSetting();
   const userStore = useUserStore();
-  const { title } = useGlobSetting();
+  let { title } = useGlobSetting();
+  let titleFromConfig = ref('');
+  titleFromConfig.value = title;
   const go = useGo();
 
   const getAppLogoClass = computed(() => [
@@ -53,17 +55,16 @@
       'xs:opacity-0': !props.alwaysShowTitle,
     },
   ]);
-  console.log('111');
   function goHome() {
     go(userStore.getUserInfo.homePath || PageEnum.BASE_HOME);
   }
-  // 获得网站标题
+  // 获得后台配置的网站标题
   const params = {
     symbol: 'common_title',
   };
-  // const symbol = 'common_title';
   getConfigBySymbol(params)
     .then((res: any) => {
+      if (res != '暂未配置') titleFromConfig.value = res;
       console.log(res);
     })
     .catch((res) => {
