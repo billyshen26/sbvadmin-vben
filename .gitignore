@@ -1,6 +1,6 @@
 node_modules
 .DS_Store
-# dist 为了配合前后端部署
+dist 
 .npmrc
 .cache
 
