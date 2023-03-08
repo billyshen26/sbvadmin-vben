@@ -18,6 +18,7 @@
   import { useDesign } from '/@/hooks/web/useDesign';
   import { PageEnum } from '/@/enums/pageEnum';
   import { useUserStore } from '/@/store/modules/user';
+  import { getConfigBySymbol } from '/@/api/sbvadmin/Config';
 
   const props = defineProps({
     /**
@@ -52,10 +53,23 @@
       'xs:opacity-0': !props.alwaysShowTitle,
     },
   ]);
-
+  console.log('111');
   function goHome() {
     go(userStore.getUserInfo.homePath || PageEnum.BASE_HOME);
   }
+  // 获得网站标题
+  const params = {
+    symbol: 'common_title',
+  };
+  // const symbol = 'common_title';
+  getConfigBySymbol(params)
+    .then((res: any) => {
+      console.log(res);
+    })
+    .catch((res) => {
+      console.log(res);
+    })
+    .finally(() => {});
 </script>
 <style lang="less" scoped>
   @prefix-cls: ~'@{namespace}-app-logo';

@@ -30,11 +30,12 @@ export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') 
  * @description: getUserInfo
  */
 export function getUserInfo() {
-  return defHttp.get<GetUserInfoModel>({ url: Api.GetUserInfo }, { errorMessageMode: 'none' });
+  // successMessageMode 设置为none,否则登录成功后弹出的ok太多
+  return defHttp.get<GetUserInfoModel>({ url: Api.GetUserInfo }, { successMessageMode: 'none' });
 }
 
 export function getPermCode() {
-  return defHttp.get<string[]>({ url: Api.GetPermCode });
+  return defHttp.get<string[]>({ url: Api.GetPermCode }, { successMessageMode: 'none' });
 }
 
 export function doLogout() {

@@ -26,7 +26,7 @@
   import ProjectCard from './components/ProjectCard.vue';
   import QuickNav from './components/QuickNav.vue';
   import DynamicInfo from './components/DynamicInfo.vue';
-  import SaleRadar from './components/SaleRadar.vue';
+  // import SaleRadar from './components/SaleRadar.vue';
 
   const loading = ref(true);
 

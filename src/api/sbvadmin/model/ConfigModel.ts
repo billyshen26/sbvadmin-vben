@@ -13,6 +13,7 @@ export interface Config {
 
 export type ConfigParams = BasicPageParams & {
   id: number;
+  symbol: string;
   createdAt: string;
 };
 
