@@ -6,7 +6,7 @@ export interface Config {
   value: string;
   name: string;
   description: string;
-  sort: number;
+  orderNo: number;
   createdAt: string;
   updatedAt: string;
 }

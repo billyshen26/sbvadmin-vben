@@ -4,7 +4,7 @@ export interface Dept {
   id: number;
   pid: number;
   name: string;
-  sort: number;
+  orderNo: number;
   createdAt: string;
   updatedAt: string;
 }

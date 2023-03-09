@@ -29,7 +29,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '排序',
-    dataIndex: 'sort',
+    dataIndex: 'orderNo',
   },
   {
     title: '创建时间',
@@ -94,7 +94,7 @@ export const formSchema: FormSchema[] = [
     component: 'Input',
   },
   {
-    field: 'sort',
+    field: 'orderNo',
     label: '排序',
     component: 'InputNumber',
   },
