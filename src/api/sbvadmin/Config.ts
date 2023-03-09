@@ -12,6 +12,6 @@ export const addConfig = (data: Config) => defHttp.post<Config>({ url: Api.Confi
 export const editConfig = (data: Config) =>
   defHttp.put<Config>({ url: Api.Configs + '/' + data.id, data });
 export const delConfig = (id: number) => defHttp.delete({ url: Api.Configs + '/' + id });
-export const getConfigBySymbol = (data: any) => {
-  return defHttp.post<string>({ url: Api.Configs + '/getConfigBySymbol', data });
+export const getConfigBySymbol = (params: any) => {
+  return defHttp.get<string>({ url: Api.Configs + '/getConfigBySymbol', params });
 };
