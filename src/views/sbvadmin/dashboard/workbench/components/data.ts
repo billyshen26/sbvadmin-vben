@@ -63,6 +63,12 @@ export const navItems: NavItem[] = [
 
 export const dynamicInfoItems: DynamicInfoItem[] = [
   {
+    avatar: 'carbon:logo-github',
+    name: 'github',
+    date: '2023-03-13',
+    desc: `收到第一个PR，感谢allonkwok`,
+  },
+  {
     avatar: 'carbon:video-chat',
     name: 'bilibili',
     date: '2023-01-11',
