@@ -10,3 +10,9 @@ fi
 if [ ! -d "src/api/sbvadmin/model" ];then
     mkdir src/api/sbvadmin/model
 fi
+if [ ! -d "src/locales/lang/en/routes/sbvadmin" ];then
+    mkdir src/locales/lang/en/routes/sbvadmin
+fi
+if [ ! -d "src/locales/lang/zh-CN/routes/sbvadmin" ];then
+    mkdir src/locales/lang/zh-CN/routes/sbvadmin
+fi
