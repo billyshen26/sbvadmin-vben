@@ -1,5 +1,6 @@
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
+import { getDictTypes } from '/@/api/sbvadmin/Dict';
 
 export const columns: BasicColumn[] = [
   {
@@ -14,6 +15,10 @@ export const columns: BasicColumn[] = [
   {
     title: '字典类型',
     dataIndex: 'type',
+  },
+  {
+    title: '字典类型名',
+    dataIndex: 'typeName',
   },
   {
     title: '字典值',
@@ -69,11 +74,17 @@ export const formSchema: FormSchema[] = [
     component: 'InputNumber',
     required: true,
     defaultValue: 0,
+    dynamicDisabled: true, // TODO
   },
   {
-    field: 'type',
     label: '字典类型',
-    component: 'Input',
+    field: 'type',
+    component: 'ApiSelect',
+    componentProps: {
+      api: getDictTypes,
+      labelField: 'typeName',
+      valueField: 'type',
+    },
     required: true,
   },
   {
