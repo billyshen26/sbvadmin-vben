@@ -14,3 +14,6 @@ export const delDict = (id: number) => defHttp.delete({ url: Api.Dicts + '/' + i
 export const getDictTypes = () => {
   return defHttp.get<DictList>({ url: Api.Dicts + '/getDictTypes' });
 };
+export const getDictByType = (params: DictParams) => {
+  return defHttp.get<DictList>({ url: Api.Dicts + '/getDictByType', params });
+};
