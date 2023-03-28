@@ -13,5 +13,8 @@ export const editConfig = (data: Config) =>
   defHttp.put<Config>({ url: Api.Configs + '/' + data.id, data });
 export const delConfig = (id: number) => defHttp.delete({ url: Api.Configs + '/' + id });
 export const getConfigBySymbol = (params: any) => {
-  return defHttp.get<string>({ url: Api.Configs + '/getConfigBySymbol', params });
+  return defHttp.get<string>(
+    { url: Api.Configs + '/getConfigBySymbol', params },
+    { successMessageMode: 'none' },
+  );
 };
