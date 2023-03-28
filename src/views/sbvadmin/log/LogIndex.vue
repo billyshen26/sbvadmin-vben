@@ -50,6 +50,10 @@
       const [registerTable, { reload, updateTableDataRecord }] = useTable({
         title: '列表',
         api: getLogList,
+        defSort: {
+          field: 'id',
+          order: 'descend',
+        },
         rowKey: 'id',
         columns,
         formConfig: {

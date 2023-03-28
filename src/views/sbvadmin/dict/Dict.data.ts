@@ -88,14 +88,14 @@ export const formSchema: FormSchema[] = [
     required: true,
   },
   {
-    field: 'value',
-    label: '字典值',
+    field: 'label',
+    label: '字典名',
     component: 'Input',
     required: true,
   },
   {
-    field: 'label',
-    label: '字典名',
+    field: 'value',
+    label: '字典值',
     component: 'Input',
     required: true,
   },

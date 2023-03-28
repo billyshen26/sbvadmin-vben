@@ -5,6 +5,7 @@ export interface User {
   name: string;
   username: string;
   avatar: string;
+  homePath: string;
   last_login_at: string;
   last_login_ip: string;
   enabled: boolean;

@@ -101,7 +101,7 @@ export const accountFormSchema: FormSchema[] = [
     field: 'password',
     label: '密码',
     component: 'InputPassword',
-    required: true,
+    required: false,
     ifShow: true,
   },
   {
@@ -142,6 +142,13 @@ export const accountFormSchema: FormSchema[] = [
     label: '邮箱',
     field: 'email',
     component: 'Input',
+    required: true,
+  },
+  {
+    label: '入口页面',
+    field: 'homePath',
+    component: 'Input',
+    defaultValue: '/dashboard/analysis',
     required: true,
   },
 ];
