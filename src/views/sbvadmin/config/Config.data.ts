@@ -67,15 +67,15 @@ export const formSchema: FormSchema[] = [
     dynamicDisabled: true,
   },
   {
-    field: 'value',
-    label: '配置值',
-    component: 'Input',
-  },
-  {
     field: 'name',
     label: '配置名',
     component: 'Input',
     required: true,
+  },
+  {
+    field: 'value',
+    label: '配置值',
+    component: 'InputTextArea',
   },
   {
     field: 'description',

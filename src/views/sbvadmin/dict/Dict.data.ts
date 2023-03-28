@@ -96,7 +96,7 @@ export const formSchema: FormSchema[] = [
   {
     field: 'value',
     label: '字典值',
-    component: 'Input',
+    component: 'InputTextArea',
     required: true,
   },
   {
