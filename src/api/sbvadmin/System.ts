@@ -52,6 +52,7 @@ export const getRoleList = (params: RoleParams) =>
 export const setRoleStatus = (id: number, status: number) =>
   defHttp.put({ url: Api.Roles + '/' + id, params: { status } });
 export const editRole = (data: Role) => defHttp.put<Role>({ url: Api.Roles + '/' + data.id, data });
+export const addRole = (data: Role) => defHttp.post<Role>({ url: Api.Roles, data });
 
 /**
  * @description: 个人信息相关

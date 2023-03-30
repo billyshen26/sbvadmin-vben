@@ -27,7 +27,7 @@
   import { formSchema } from './role.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { BasicTree, TreeItem } from '/@/components/Tree';
-  import { getPermissionList, editRole } from '/@/api/sbvadmin/System';
+  import { getPermissionList, editRole, addRole } from '/@/api/sbvadmin/System';
   // import { getMenuList } from '/@/api/demo/system';
   // import { editRole } from '/@/api/sbvadmin/System';
   import { useMessage } from '/@/hooks/web/useMessage';
@@ -84,10 +84,19 @@
                 closeDrawer();
                 emit('success');
               });
+          } else {
+            addRole(values)
+              .then(() => {
+                createMessage.success(`3`);
+              })
+              .catch(() => {
+                createMessage.error('4');
+              })
+              .finally(() => {
+                closeDrawer();
+                emit('success');
+              });
           }
-          console.log(values);
-          closeDrawer();
-          emit('success');
         } finally {
           setDrawerProps({ confirmLoading: false });
         }
