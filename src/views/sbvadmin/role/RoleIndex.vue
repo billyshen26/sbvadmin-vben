@@ -33,7 +33,7 @@
   import { defineComponent } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getRoleList } from '/@/api/sbvadmin/System';
+  import { getRoleList, deleteRole } from '/@/api/sbvadmin/System';
 
   import { useDrawer } from '/@/components/Drawer';
   import RoleDrawer from './RoleDrawer.vue';
@@ -81,6 +81,17 @@
 
       function handleDelete(record: Recordable) {
         console.log(record);
+        deleteRole(record.id)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((res) => {
+            console.log(res);
+          })
+          .finally(() => {
+            reload();
+            console.log(record);
+          });
       }
 
       function handleSuccess() {
