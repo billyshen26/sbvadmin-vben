@@ -54,15 +54,9 @@ export const searchFormSchema: FormSchema[] = [
     colProps: { span: 8 },
   },
   {
-    field: 'nickname',
-    label: '昵称',
+    field: 'name',
+    label: '用户名/昵称',
     component: 'Input',
-    colProps: { span: 8 },
-  },
-  {
-    field: 'createdAt',
-    component: 'RangePicker',
-    label: '创建日期',
     colProps: { span: 8 },
   },
 ];

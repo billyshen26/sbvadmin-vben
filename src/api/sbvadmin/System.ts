@@ -49,7 +49,7 @@ export const deletePermission = (id: number) => defHttp.delete({ url: Api.Permis
  */
 export const getRoleList = (params: RoleParams) =>
   defHttp.get<RoleList>({ url: Api.Roles, params });
-export const setRoleStatus = (id: number, status: number) =>
+export const setRoleStatus = (id: number, status: boolean) =>
   defHttp.put({ url: Api.Roles + '/' + id, params: { status } });
 export const editRole = (data: Role) => defHttp.put<Role>({ url: Api.Roles + '/' + data.id, data });
 export const addRole = (data: Role) => defHttp.post<Role>({ url: Api.Roles, data });

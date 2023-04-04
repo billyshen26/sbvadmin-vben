@@ -30,13 +30,13 @@ export const columns: BasicColumn[] = [
         record.pendingStatus = false;
       }
       return h(Switch, {
-        checked: record.status === 1,
+        checked: record.status === true,
         checkedChildren: '已启用',
         unCheckedChildren: '已禁用',
         loading: record.pendingStatus,
         onChange(checked: boolean) {
           record.pendingStatus = true;
-          const newStatus = checked ? 1 : 0;
+          const newStatus = checked ? true : false;
           const { createMessage } = useMessage();
           setRoleStatus(record.id, newStatus)
             .then(() => {
@@ -66,14 +66,8 @@ export const columns: BasicColumn[] = [
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: 'id',
-    label: 'ID',
-    component: 'Input',
-    colProps: { span: 8 },
-  },
-  {
-    field: 'nameZh',
-    label: '角色名称',
+    field: 'name',
+    label: '角色值/名称',
     component: 'Input',
     colProps: { span: 8 },
   },

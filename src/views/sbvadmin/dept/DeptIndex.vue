@@ -54,7 +54,7 @@
           autoSubmitOnEnter: true,
         },
         showIndexColumn: false,
-        useSearchForm: true,
+        useSearchForm: false,
         showTableSetting: true,
         bordered: true,
         handleSearchInfoFn(info) {
