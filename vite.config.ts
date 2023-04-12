@@ -16,16 +16,16 @@ export default defineApplicationConfig({
     },
     server: {
       proxy: {
-        '/basic-api': {
-          target: 'http://localhost:3000',
+        '/api': {
+          target: 'http://localhost:8081/api',
           changeOrigin: true,
           ws: true,
-          rewrite: (path) => path.replace(new RegExp(`^/basic-api`), ''),
+          rewrite: (path) => path.replace(new RegExp(`^/api`), ''),
           // only https
           // secure: false
         },
         '/upload': {
-          target: 'http://localhost:3300/upload',
+          target: 'http://localhost:8081/api/upload',
           changeOrigin: true,
           ws: true,
           rewrite: (path) => path.replace(new RegExp(`^/upload`), ''),
