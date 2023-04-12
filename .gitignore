@@ -1,8 +1,8 @@
 node_modules
 .DS_Store
-dist 
-.npmrc
+dist
 .cache
+.turbo
 
 tests/server/static
 tests/server/static/upload
