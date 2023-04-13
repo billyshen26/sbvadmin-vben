@@ -1,5 +1,4 @@
-import { BasicColumn } from '/@/components/Table';
-import { FormSchema } from '/@/components/Table';
+import { BasicColumn, FormSchema } from '/@/components/Table';
 
 export const columns: BasicColumn[] = [
   {
@@ -14,6 +13,10 @@ export const columns: BasicColumn[] = [
   {
     title: '用户名',
     dataIndex: 'username',
+  },
+  {
+    title: '姓名',
+    dataIndex: 'nickname',
   },
   {
     title: '日志等级:1为行为日志,2为错误日志',

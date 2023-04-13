@@ -40,6 +40,7 @@
 
   import { columns, searchFormSchema } from './Log.data';
   import { useMessage } from '/@/hooks/web/useMessage';
+
   export default defineComponent({
     name: 'LogManagement',
     components: { BasicTable, LogModal, TableAction },
