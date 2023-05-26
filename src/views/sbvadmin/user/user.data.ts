@@ -1,8 +1,7 @@
 // import { getAllRoleList, isAccountExist } from '/@/api/demo/system';
 // import { getAllRoleList } from '/@/api/demo/system';
 import { getRoleList } from '/@/api/sbvadmin/System';
-import { BasicColumn } from '/@/components/Table';
-import { FormSchema } from '/@/components/Table';
+import { BasicColumn, FormSchema } from '/@/components/Table';
 
 export const columns: BasicColumn[] = [
   {
@@ -136,7 +135,6 @@ export const accountFormSchema: FormSchema[] = [
     label: '邮箱',
     field: 'email',
     component: 'Input',
-    required: true,
   },
   {
     label: '入口页面',
