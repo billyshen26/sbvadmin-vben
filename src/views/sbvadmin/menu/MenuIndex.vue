@@ -2,7 +2,9 @@
   <div>
     <BasicTable @register="registerTable" @fetch-success="onFetchSuccess">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate"> 新增菜单 </a-button>
+        <Authority :value="'/api/permissions|POST'">
+          <a-button type="primary" @click="handleCreate">新增菜单</a-button>
+        </Authority>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -11,6 +13,7 @@
               {
                 icon: 'clarity:note-edit-line',
                 onClick: handleEdit.bind(null, record),
+                auth: '/api/permissions|PUT',
               },
               {
                 icon: 'ant-design:delete-outlined',
@@ -20,6 +23,7 @@
                   placement: 'left',
                   confirm: handleDelete.bind(null, record),
                 },
+                auth: '/api/permissions|DELETE',
               },
             ]"
           />
@@ -37,14 +41,14 @@
   import { getPermissionList, deletePermission } from '/@/api/sbvadmin/System';
   import { useDrawer } from '/@/components/Drawer';
   import MenuDrawer from './MenuDrawer.vue';
-
+  import { Authority } from '/@/components/Authority';
   import { columns, searchFormSchema } from './menu.data';
   import { useMessage } from '/@/hooks/web/useMessage';
   // import { deletePermission } from '/@/api/sbvadmin/System';
 
   export default defineComponent({
     name: 'MenuManagement',
-    components: { BasicTable, MenuDrawer, TableAction },
+    components: { BasicTable, MenuDrawer, TableAction, Authority },
     setup() {
       const [registerDrawer, { openDrawer }] = useDrawer();
       const [registerTable, { reload, expandAll }] = useTable({

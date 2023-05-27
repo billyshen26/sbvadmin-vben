@@ -2,7 +2,9 @@
   <div>
     <BasicTable @register="registerTable" :searchInfo="searchInfo">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate"> 新增 </a-button>
+        <Authority :value="'/api/depts|POST'">
+          <a-button type="primary" @click="handleCreate">新增机构</a-button>
+        </Authority>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -11,6 +13,7 @@
               {
                 icon: 'clarity:note-edit-line',
                 onClick: handleEdit.bind(null, record),
+                auth: '/api/depts/**|PUT',
               },
               {
                 icon: 'ant-design:delete-outlined',
@@ -20,6 +23,7 @@
                   placement: 'left',
                   confirm: handleDelete.bind(null, record),
                 },
+                auth: '/api/depts/**|DELETE',
               },
             ]"
           />
@@ -36,10 +40,11 @@
   import { getDeptList, delDept } from '/@/api/sbvadmin/Dept';
   import DeptModal from './DeptModal.vue';
   import { columns, searchFormSchema } from './Dept.data';
+  import { Authority } from '/@/components/Authority';
 
   export default defineComponent({
     name: 'DeptManagement',
-    components: { BasicTable, DeptModal, TableAction },
+    components: { BasicTable, DeptModal, TableAction, Authority },
     setup() {
       const [registerModal, { openModal }] = useModal();
       const searchInfo = reactive<Recordable>({});
