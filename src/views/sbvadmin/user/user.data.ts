@@ -5,14 +5,16 @@ import { BasicColumn, FormSchema } from '/@/components/Table';
 
 export const columns: BasicColumn[] = [
   {
+    title: 'ID',
+    dataIndex: 'id',
+  },
+  {
     title: '用户名',
     dataIndex: 'username',
-    width: 120,
   },
   {
     title: '头像',
     dataIndex: 'avatar',
-    width: 120,
   },
   {
     title: '昵称',
@@ -22,22 +24,18 @@ export const columns: BasicColumn[] = [
   {
     title: '邮箱',
     dataIndex: 'email',
-    width: 120,
   },
   {
     title: '创建时间',
     dataIndex: 'createdAt',
-    width: 180,
   },
   {
     title: '角色',
     dataIndex: 'roles',
-    width: 200,
   },
   {
     title: '机构',
     dataIndex: 'depts',
-    width: 200,
   },
   {
     title: '最后登录时间',
