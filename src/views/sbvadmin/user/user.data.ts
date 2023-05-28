@@ -7,14 +7,17 @@ export const columns: BasicColumn[] = [
   {
     title: 'ID',
     dataIndex: 'id',
+    width: 80,
   },
   {
     title: '用户名',
     dataIndex: 'username',
+    width: 120,
   },
   {
     title: '头像',
     dataIndex: 'avatar',
+    width: 120,
   },
   {
     title: '昵称',
@@ -24,22 +27,27 @@ export const columns: BasicColumn[] = [
   {
     title: '邮箱',
     dataIndex: 'email',
-  },
-  {
-    title: '创建时间',
-    dataIndex: 'createdAt',
+    width: 120,
   },
   {
     title: '角色',
     dataIndex: 'roles',
+    width: 120,
   },
   {
     title: '机构',
     dataIndex: 'depts',
+    width: 120,
+  },
+  {
+    title: '创建时间',
+    dataIndex: 'createdAt',
+    width: 180,
   },
   {
     title: '最后登录时间',
     dataIndex: 'lastLoginAt',
+    width: 180,
   },
 ];
 
