@@ -5,10 +5,12 @@ export const columns: BasicColumn[] = [
     title: 'ID',
     dataIndex: 'id',
     sorter: true,
+    width: 80,
   },
   {
-    title: '操作用户id',
+    title: '用户id',
     dataIndex: 'uid',
+    width: 80,
   },
   {
     title: '用户名',
@@ -18,17 +20,32 @@ export const columns: BasicColumn[] = [
     title: '姓名',
     dataIndex: 'nickname',
   },
-  {
-    title: '日志等级:1为行为日志,2为错误日志',
-    dataIndex: 'level',
-  },
+
   {
     title: '操作描述',
     dataIndex: 'description',
+    width: 180,
   },
   {
     title: '请求参数',
     dataIndex: 'reqParam',
+    width: 240,
+  },
+  {
+    title: '创建时间',
+    dataIndex: 'createdAt',
+  },
+  {
+    title: '请求IP',
+    dataIndex: 'ip',
+  },
+  {
+    title: '请求地址',
+    dataIndex: 'address',
+  },
+  {
+    title: '等级',
+    dataIndex: 'level',
   },
   {
     title: '耗时',
@@ -43,20 +60,8 @@ export const columns: BasicColumn[] = [
     dataIndex: 'uri',
   },
   {
-    title: '请求IP',
-    dataIndex: 'ip',
-  },
-  {
-    title: '请求地址',
-    dataIndex: 'address',
-  },
-  {
     title: '版本号',
     dataIndex: 'version',
-  },
-  {
-    title: '创建时间',
-    dataIndex: 'createdAt',
   },
   {
     title: '修改时间',
@@ -68,6 +73,12 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: 'id',
     label: 'ID',
+    component: 'Input',
+    colProps: { span: 8 },
+  },
+  {
+    field: 'likeSearch',
+    label: '描述',
     component: 'Input',
     colProps: { span: 8 },
   },
