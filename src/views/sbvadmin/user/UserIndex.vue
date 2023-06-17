@@ -29,15 +29,16 @@
         <template v-else-if="column.key === 'action'">
           <TableAction
             :actions="[
-              {
-                icon: 'clarity:info-standard-line',
-                tooltip: '查看用户详情',
-                onClick: handleView.bind(null, record),
-              },
+              // {
+              //   icon: 'clarity:info-standard-line',
+              //   tooltip: '查看用户详情',
+              //   onClick: handleView.bind(null, record),
+              // },
               {
                 icon: 'clarity:note-edit-line',
                 tooltip: '编辑用户资料',
                 onClick: handleEdit.bind(null, record),
+                auth: '/api/users/**|PUT',
               },
               {
                 icon: 'ant-design:delete-outlined',
@@ -48,6 +49,7 @@
                   placement: 'left',
                   confirm: handleDelete.bind(null, record),
                 },
+                auth: '/api/users/**|DELETE',
               },
             ]"
           />
@@ -72,6 +74,7 @@
   import { columns, searchFormSchema } from './user.data';
   import { useGo } from '/@/hooks/web/usePage';
   import { Avatar, Tag } from 'ant-design-vue';
+
   export default defineComponent({
     name: 'AccountManagement',
     // components: { BasicTable, PageWrapper, DeptTree, AccountModal, TableAction },
