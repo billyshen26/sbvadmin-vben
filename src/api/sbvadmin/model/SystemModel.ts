@@ -10,6 +10,7 @@ export interface User {
   last_login_ip: string;
   enabled: boolean;
   locked: boolean;
+  activated: boolean;
 }
 
 // 权限模型

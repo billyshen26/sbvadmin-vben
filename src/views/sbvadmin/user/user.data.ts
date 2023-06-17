@@ -1,7 +1,10 @@
 // import { getAllRoleList, isAccountExist } from '/@/api/demo/system';
 // import { getAllRoleList } from '/@/api/demo/system';
-import { getRoleList } from '/@/api/sbvadmin/System';
+import { getRoleList, editUser } from '/@/api/sbvadmin/System';
 import { BasicColumn, FormSchema } from '/@/components/Table';
+import { h } from 'vue';
+import { Switch } from 'ant-design-vue';
+import { useMessage } from '/@/hooks/web/useMessage';
 
 export const columns: BasicColumn[] = [
   {
@@ -13,6 +16,40 @@ export const columns: BasicColumn[] = [
     title: '用户名',
     dataIndex: 'username',
     width: 120,
+  },
+  {
+    title: '状态',
+    dataIndex: 'activated',
+    width: 120,
+    customRender: ({ record }) => {
+      if (!Reflect.has(record, 'pendingStatus')) {
+        record.pendingStatus = false;
+      }
+      return h(Switch, {
+        checked: record.activated === true,
+        checkedChildren: '已启用',
+        unCheckedChildren: '已禁用',
+        loading: record.pendingStatus,
+        onChange(checked: boolean) {
+          record.pendingStatus = true;
+          // const newStatus = checked ? true : false;
+          record.activated = checked ? true : false;
+
+          const { createMessage } = useMessage();
+          editUser({ id: record.id, activated: record.activated })
+            .then(() => {
+              // record.status = newStatus;
+              createMessage.success(`已成功修改用户状态`);
+            })
+            .catch(() => {
+              createMessage.error('修改用户状态失败');
+            })
+            .finally(() => {
+              record.pendingStatus = false;
+            });
+        },
+      });
+    },
   },
   {
     title: '头像',
