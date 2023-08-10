@@ -1,6 +1,8 @@
-import { BasicColumn } from '/@/components/Table';
-import { FormSchema } from '/@/components/Table';
-import { getDictTypes } from '/@/api/sbvadmin/Dict';
+import { BasicColumn, FormSchema } from '/@/components/Table';
+import { getDictTypes, getDictByType } from '/@/api/sbvadmin/Dict';
+import { ref } from 'vue';
+
+const type = ref<String>('');
 
 export const columns: BasicColumn[] = [
   {
@@ -74,14 +76,6 @@ export const formSchema: FormSchema[] = [
     dynamicDisabled: true,
   },
   {
-    field: 'pid',
-    label: '父级ID',
-    component: 'InputNumber',
-    required: true,
-    defaultValue: 0,
-    dynamicDisabled: true, // TODO
-  },
-  {
     label: '字典类型',
     field: 'type',
     component: 'ApiSelect',
@@ -89,6 +83,23 @@ export const formSchema: FormSchema[] = [
       api: getDictTypes,
       labelField: 'typeName',
       valueField: 'type',
+      onChange: (e: any) => {
+        type.value = e;
+        console.log(e);
+      },
+    },
+    required: true,
+  },
+  {
+    field: 'pid',
+    label: '所属父级',
+    component: 'ApiTreeSelect',
+    componentProps: {
+      params: { type: type },
+      api: getDictByType,
+      // resultField: 'records', // TIPS: 返回结构里有records
+      labelField: 'label',
+      valueField: 'id',
     },
     required: true,
   },
