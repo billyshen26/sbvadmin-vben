@@ -56,6 +56,12 @@ export const searchFormSchema: FormSchema[] = [
     colProps: { span: 8 },
   },
   {
+    field: 'likeSearch',
+    label: '字典值/名',
+    component: 'Input',
+    colProps: { span: 8 },
+  },
+  {
     field: 'createdAt',
     component: 'RangePicker',
     componentProps: {
