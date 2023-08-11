@@ -99,6 +99,7 @@ export const formSchema: FormSchema[] = [
   {
     field: 'pid',
     label: '所属父级',
+    defaultValue: 0,
     component: 'ApiTreeSelect',
     componentProps: {
       params: { type: type },
