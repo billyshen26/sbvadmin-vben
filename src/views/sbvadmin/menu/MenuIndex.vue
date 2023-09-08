@@ -4,6 +4,8 @@
       <template #toolbar>
         <Authority :value="'/api/permissions|POST'">
           <a-button type="primary" @click="handleCreate">新增菜单</a-button>
+          <a-button type="primary" @click="handleRereashMenu">更新菜单缓存</a-button>
+          <a-button type="primary" @click="handleRereashAll">更新所有缓存</a-button>
         </Authority>
       </template>
       <template #bodyCell="{ column, record }">
@@ -13,7 +15,7 @@
               {
                 icon: 'clarity:note-edit-line',
                 onClick: handleEdit.bind(null, record),
-                auth: '/api/permissions|PUT',
+                auth: '/api/permissions/**|PUT',
               },
               {
                 icon: 'ant-design:delete-outlined',
@@ -23,7 +25,7 @@
                   placement: 'left',
                   confirm: handleDelete.bind(null, record),
                 },
-                auth: '/api/permissions|DELETE',
+                auth: '/api/permissions/**|DELETE',
               },
             ]"
           />
@@ -37,14 +39,17 @@
   import { defineComponent, nextTick } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  // import { getMenuList } from '/@/api/sbvadmin/system';
-  import { getPermissionList, deletePermission } from '/@/api/sbvadmin/System';
+  import {
+    getPermissionList,
+    deletePermission,
+    refreshPermissions,
+    refreshAllCache,
+  } from '/@/api/sbvadmin/System';
   import { useDrawer } from '/@/components/Drawer';
   import MenuDrawer from './MenuDrawer.vue';
   import { Authority } from '/@/components/Authority';
   import { columns, searchFormSchema } from './menu.data';
   import { useMessage } from '/@/hooks/web/useMessage';
-  // import { deletePermission } from '/@/api/sbvadmin/System';
 
   export default defineComponent({
     name: 'MenuManagement',
@@ -105,6 +110,38 @@
           });
       }
 
+      // 手动更新菜单缓存
+      function handleRereashMenu(record: Recordable) {
+        const { createMessage } = useMessage();
+        refreshPermissions()
+          .then(() => {
+            createMessage.success(`更新成功`);
+          })
+          .catch(() => {
+            createMessage.error('0');
+          })
+          .finally(() => {
+            reload();
+            console.log(record);
+          });
+      }
+
+      // 手动更新所有缓存
+      function handleRereashAll(record: Recordable) {
+        const { createMessage } = useMessage();
+        refreshAllCache()
+          .then(() => {
+            createMessage.success(`更新成功`);
+          })
+          .catch(() => {
+            createMessage.error('0');
+          })
+          .finally(() => {
+            reload();
+            console.log(record);
+          });
+      }
+
       function handleSuccess() {
         reload();
       }
@@ -122,6 +159,8 @@
         handleDelete,
         handleSuccess,
         onFetchSuccess,
+        handleRereashMenu,
+        handleRereashAll,
       };
     },
   });

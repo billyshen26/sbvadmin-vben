@@ -44,6 +44,8 @@ export const addPermission = (data: Permission) =>
 export const editPermission = (data: Permission) =>
   defHttp.put<Permission>({ url: Api.Permissions + '/' + data.id, data });
 export const deletePermission = (id: number) => defHttp.delete({ url: Api.Permissions + '/' + id });
+export const refreshPermissions = () =>
+  defHttp.post<Permission>({ url: Api.Permissions + '/refreshPermissions' });
 /**
  * @description: 角色相关
  */
@@ -59,3 +61,9 @@ export const deleteRole = (id: number) => defHttp.delete({ url: Api.Roles + '/' 
  * @description: 个人信息相关
  */
 export const geUserInfo = () => defHttp.get<User>({ url: Api.UserInfo });
+
+/**
+ * @description: 系统相关
+ */
+export const refreshAllCache = () =>
+  defHttp.post<any>({ url: Api.Permissions + '/refreshAllCache' });
