@@ -18,7 +18,7 @@ export interface RoleInfo {
 export interface LoginResultModel {
   userId: string | number;
   token: string;
-  role: RoleInfo;
+  roles: RoleInfo[];
 }
 
 /**
