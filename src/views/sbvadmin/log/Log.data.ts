@@ -34,6 +34,7 @@ export const columns: BasicColumn[] = [
   {
     title: '创建时间',
     dataIndex: 'createdAt',
+    width: 180,
   },
   {
     title: '请求IP',
