@@ -4,6 +4,7 @@
     "onlineDocument": "在线文档"
   }, 
   "header": {
+    "dropdownItemUserCenter": "个人中心",
     "dropdownChangeApi": "切换API", 
     "dropdownItemDoc": "文档", 
     "dropdownItemLoginOut": "退出系统", 
