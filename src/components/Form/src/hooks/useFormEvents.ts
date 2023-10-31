@@ -1,5 +1,5 @@
 import type { ComputedRef, Ref } from 'vue';
-import type { FormProps, FormSchema, FormActionType } from '../types/form';
+import type { FormProps, FormSchemaInner as FormSchema, FormActionType } from '../types/form';
 import type { NamePath } from 'ant-design-vue/lib/form/interface';
 import { unref, toRaw, nextTick } from 'vue';
 import {
@@ -111,6 +111,10 @@ export function useFormEvents({
    * @description: Set form value
    */
   async function setFieldsValue(values: Recordable): Promise<void> {
+    if (Object.keys(values).length === 0) {
+      return;
+    }
+
     const fields = getAllFields();
 
     // key 支持 a.b.c 的嵌套写法
@@ -335,7 +339,7 @@ export function useFormEvents({
    */
   function itemIsDateType(key: string) {
     return unref(getSchema).some((item) => {
-      return item.field === key ? dateItemType.includes(item.component) : false;
+      return item.field === key && item.component ? dateItemType.includes(item.component) : false;
     });
   }
 
@@ -414,6 +418,9 @@ function getDefaultValue(
   }
   if (!defaultValue && schema && checkIsRangeSlider(schema)) {
     defaultValue = [0, 0];
+  }
+  if (!defaultValue && schema && schema.component === 'ApiTree') {
+    defaultValue = [];
   }
   return defaultValue;
 }

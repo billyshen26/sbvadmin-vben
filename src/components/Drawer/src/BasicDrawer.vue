@@ -1,5 +1,5 @@
 <template>
-  <Drawer @close="onClose" v-bind="getBindValues">
+  <Drawer v-bind="getBindValues" :class="prefixCls" @close="onClose">
     <template #title v-if="!$slots.title">
       <DrawerHeader
         :title="getMergeProps.title"
@@ -97,8 +97,7 @@
           opt.rootClassName = wrapClassName ? `${wrapClassName} ${detailCls}` : detailCls;
 
           if (!getContainer) {
-            // TODO type error?
-            opt.getContainer = `.${prefixVar}-layout-content` as any;
+            opt.getContainer = `.${prefixVar}-layout-content`;
           }
         }
         return opt as DrawerProps;
