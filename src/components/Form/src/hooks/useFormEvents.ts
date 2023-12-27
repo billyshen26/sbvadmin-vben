@@ -2,20 +2,17 @@ import type { ComputedRef, Ref } from 'vue';
 import type { FormProps, FormSchemaInner as FormSchema, FormActionType } from '../types/form';
 import type { NamePath } from 'ant-design-vue/lib/form/interface';
 import { unref, toRaw, nextTick } from 'vue';
+import { isArray, isFunction, isObject, isString, isDef, isNil } from '@/utils/is';
+import { deepMerge } from '@/utils';
 import {
-  isArray,
-  isFunction,
-  isObject,
-  isString,
-  isDef,
-  isNullOrUnDef,
-  isEmpty,
-} from '/@/utils/is';
-import { deepMerge } from '/@/utils';
-import { dateItemType, handleInputNumberValue, defaultValueComponents } from '../helper';
-import { dateUtil } from '/@/utils/dateUtil';
+  dateItemType,
+  handleInputNumberValue,
+  defaultValueComponents,
+  isIncludeSimpleComponents,
+} from '../helper';
+import { dateUtil } from '@/utils/dateUtil';
 import { cloneDeep, set, uniqBy, get } from 'lodash-es';
-import { error } from '/@/utils/log';
+import { error } from '@/utils/log';
 
 interface UseFormActionContext {
   emit: EmitType;
@@ -131,7 +128,10 @@ export function useFormEvents({
       const { componentProps } = schema || {};
       let _props = componentProps as any;
       if (typeof componentProps === 'function') {
-        _props = _props({ formModel: unref(formModel) });
+        _props = _props({
+          formModel: unref(formModel),
+          formActionType,
+        });
       }
 
       const constructValue = tryConstructArray(key, values) || tryConstructObject(key, values);
@@ -250,7 +250,8 @@ export function useFormEvents({
     }
 
     const hasField = updateData.every(
-      (item) => item.component === 'Divider' || (Reflect.has(item, 'field') && item.field),
+      (item) =>
+        isIncludeSimpleComponents(item.component) || (Reflect.has(item, 'field') && item.field),
     );
 
     if (!hasField) {
@@ -272,7 +273,8 @@ export function useFormEvents({
     }
 
     const hasField = updateData.every(
-      (item) => item.component === 'Divider' || (Reflect.has(item, 'field') && item.field),
+      (item) =>
+        isIncludeSimpleComponents(item.component) || (Reflect.has(item, 'field') && item.field),
     );
 
     if (!hasField) {
@@ -282,21 +284,19 @@ export function useFormEvents({
       return;
     }
     const schema: FormSchema[] = [];
+    const updatedSchema: FormSchema[] = [];
     unref(getSchema).forEach((val) => {
-      let _val;
-      updateData.forEach((item) => {
-        if (val.field === item.field) {
-          _val = item;
-        }
-      });
-      if (_val !== undefined && val.field === _val.field) {
-        const newSchema = deepMerge(val, _val);
+      const updatedItem = updateData.find((item) => val.field === item.field);
+
+      if (updatedItem) {
+        const newSchema = deepMerge(val, updatedItem);
+        updatedSchema.push(newSchema as FormSchema);
         schema.push(newSchema as FormSchema);
       } else {
         schema.push(val);
       }
     });
-    _setDefaultValue(schema);
+    _setDefaultValue(updatedSchema);
 
     schemaRef.value = uniqBy(schema, 'field');
   }
@@ -314,13 +314,11 @@ export function useFormEvents({
     const currentFieldsValue = getFieldsValue();
     schemas.forEach((item) => {
       if (
-        item.component != 'Divider' &&
+        !isIncludeSimpleComponents(item.component) &&
         Reflect.has(item, 'field') &&
         item.field &&
-        !isNullOrUnDef(item.defaultValue) &&
-        (!(item.field in currentFieldsValue) ||
-          isNullOrUnDef(currentFieldsValue[item.field]) ||
-          isEmpty(currentFieldsValue[item.field]))
+        !isNil(item.defaultValue) &&
+        (!(item.field in currentFieldsValue) || isNil(currentFieldsValue[item.field]))
       ) {
         obj[item.field] = item.defaultValue;
       }
@@ -344,8 +342,12 @@ export function useFormEvents({
   }
 
   async function validateFields(nameList?: NamePath[] | undefined) {
-    const values = unref(formElRef)?.validateFields(nameList);
+    const values = await unref(formElRef)?.validateFields(nameList);
     return handleFormValues(values);
+  }
+
+  async function setProps(formProps: Partial<FormProps>): Promise<void> {
+    await unref(formElRef)?.setProps(formProps);
   }
 
   async function validate(nameList?: NamePath[] | false | undefined) {
@@ -389,6 +391,22 @@ export function useFormEvents({
       throw new Error(error);
     }
   }
+
+  const formActionType: Partial<FormActionType> = {
+    getFieldsValue,
+    setFieldsValue,
+    resetFields,
+    updateSchema,
+    resetSchema,
+    setProps,
+    removeSchemaByField,
+    appendSchemaByField,
+    clearValidate,
+    validateFields,
+    validate,
+    submit: handleSubmit,
+    scrollToField: scrollToField,
+  };
 
   return {
     handleSubmit,

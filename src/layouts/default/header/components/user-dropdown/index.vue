@@ -22,7 +22,7 @@
           icon="ion:document-text-outline"
           v-if="getShowDoc"
         />
-        <MenuDivider v-if="getShowDoc" />
+        <Menu.Divider v-if="getShowDoc" />
         <MenuItem
           v-if="getShowApi"
           key="api"
@@ -46,70 +46,59 @@
   <LockAction @register="register" />
   <ChangeApi @register="registerApi" />
 </template>
-<script lang="ts">
-  // components
+<script lang="ts" setup>
   import { Dropdown, Menu } from 'ant-design-vue';
   import type { MenuInfo } from 'ant-design-vue/lib/menu/src/interface';
-
-  import { defineComponent, computed } from 'vue';
-
-  import { DOC_URL } from '/@/settings/siteSetting';
-
-  import { useUserStore } from '/@/store/modules/user';
-  import { useHeaderSetting } from '/@/hooks/setting/useHeaderSetting';
-  import { useI18n } from '/@/hooks/web/useI18n';
-  import { useDesign } from '/@/hooks/web/useDesign';
-  import { useModal } from '/@/components/Modal';
-
-  import headerImg from '/@/assets/images/header.jpg';
-  import { propTypes } from '/@/utils/propTypes';
-  import { openWindow } from '/@/utils';
-
-  import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
+  import { computed } from 'vue';
+  import { DOC_URL } from '@/settings/siteSetting';
+  import { useUserStore } from '@/store/modules/user';
+  import { useHeaderSetting } from '@/hooks/setting/useHeaderSetting';
+  import { useI18n } from '@/hooks/web/useI18n';
+  import { useDesign } from '@/hooks/web/useDesign';
+  import { useModal } from '@/components/Modal';
+  import headerImg from '@/assets/images/header.jpg';
+  import { propTypes } from '@/utils/propTypes';
+  import { openWindow } from '@/utils';
+  import { createAsyncComponent } from '@/utils/factory/createAsyncComponent';
   import { useGo } from '/@/hooks/web/usePage';
-
+  
   type MenuEvent = 'logout' | 'doc' | 'lock' | 'user' | 'api';
 
-  export default defineComponent({
-    name: 'UserDropdown',
-    components: {
-      Dropdown,
-      Menu,
-      MenuItem: createAsyncComponent(() => import('./DropMenuItem.vue')),
-      MenuDivider: Menu.Divider,
-      LockAction: createAsyncComponent(() => import('../lock/LockModal.vue')),
-      ChangeApi: createAsyncComponent(() => import('../ChangeApi/index.vue')),
-    },
-    props: {
-      theme: propTypes.oneOf(['dark', 'light']),
-    },
-    setup() {
-      const go = useGo();
-      const { prefixCls } = useDesign('header-user-dropdown');
-      const { t } = useI18n();
-      const { getShowDoc, getUseLockPage, getShowApi } = useHeaderSetting();
-      const userStore = useUserStore();
+  const MenuItem = createAsyncComponent(() => import('./DropMenuItem.vue'));
+  const LockAction = createAsyncComponent(() => import('../lock/LockModal.vue'));
+  const ChangeApi = createAsyncComponent(() => import('../ChangeApi/index.vue'));
 
-      const getUserInfo = computed(() => {
-        const { realName = '', avatar, desc } = userStore.getUserInfo || {};
-        return { realName, avatar: avatar || headerImg, desc };
-      });
+  defineOptions({ name: 'UserDropdown' });
 
-      const [register, { openModal }] = useModal();
-      const [registerApi, { openModal: openApiModal }] = useModal();
+  defineProps({
+    theme: propTypes.oneOf(['dark', 'light']),
+  });
 
-      function handleLock() {
-        openModal(true);
-      }
+  const { prefixCls } = useDesign('header-user-dropdown');
+  const { t } = useI18n();
+  const { getShowDoc, getUseLockPage, getShowApi } = useHeaderSetting();
+  const userStore = useUserStore();
 
-      function handleApi() {
-        openApiModal(true, {});
-      }
+  const getUserInfo = computed(() => {
+    const { realName = '', avatar, desc } = userStore.getUserInfo || {};
+    return { realName, avatar: avatar || headerImg, desc };
+  });
 
-      //  login out
-      function handleLoginOut() {
-        userStore.confirmLoginOut();
-      }
+  const [register, { openModal }] = useModal();
+  const [registerApi, { openModal: openApiModal }] = useModal();
+
+  function handleLock() {
+    openModal(true);
+  }
+
+  function handleApi() {
+    openApiModal(true, {});
+  }
+
+  //  login out
+  function handleLoginOut() {
+    userStore.confirmLoginOut();
+  }
 
       // open doc
       function openDoc() {

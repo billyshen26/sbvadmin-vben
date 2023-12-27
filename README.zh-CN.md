@@ -181,6 +181,10 @@ docker run --name vue-vben-admin -d -p 6666:80  -e VG_BASE_URL=http://localhost:
 
 - QQ 群 `569291866`
 
+## Star 历史
+
+[![Star History Chart](https://api.star-history.com/svg?repos=vbenjs/vue-vben-admin&type=Date)](https://star-history.com/#vbenjs/vue-vben-admin&Date)
+
 ## License
 
 [MIT © Vben-2020](./LICENSE)

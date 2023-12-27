@@ -11,7 +11,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { computed, unref, ref } from 'vue';
+  import { computed, ref, unref } from 'vue';
   import { useGlobSetting } from '/@/hooks/setting';
   import { useGo } from '/@/hooks/web/usePage';
   import { useMenuSetting } from '/@/hooks/setting/useMenuSetting';
