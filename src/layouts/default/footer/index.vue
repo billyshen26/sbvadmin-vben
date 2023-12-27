@@ -7,8 +7,8 @@
 
       <a @click="openWindow(DOC_URL)">{{ t('layout.footer.onlineDocument') }}</a>
     </div>
-    <div>Copyright &copy;2022 SBVADMIN</div>
-  </Footer>
+    <div>Copyright &copy;2024 SBVADMIN</div>
+  </Layout.Footer>
 </template>
 <script lang="ts" setup>
   import { computed, unref, ref } from 'vue';

@@ -61,7 +61,7 @@
   import { openWindow } from '@/utils';
   import { createAsyncComponent } from '@/utils/factory/createAsyncComponent';
   import { useGo } from '/@/hooks/web/usePage';
-  
+
   type MenuEvent = 'logout' | 'doc' | 'lock' | 'user' | 'api';
 
   const MenuItem = createAsyncComponent(() => import('./DropMenuItem.vue'));
@@ -100,49 +100,36 @@
     userStore.confirmLoginOut();
   }
 
-      // open doc
-      function openDoc() {
-        openWindow(DOC_URL);
-      }
+  // open doc
+  function openDoc() {
+    openWindow(DOC_URL);
+  }
 
-      // go to user center
-      function goUserCenter() {
-        go('/user-center');
-      }
+  // go to user center
+  const go = useGo();
+  function goUserCenter() {
+    go('/user-center');
+  }
 
-      function handleMenuClick(e: MenuInfo) {
-        switch (e.key as MenuEvent) {
-          case 'logout':
-            handleLoginOut();
-            break;
-          case 'doc':
-            openDoc();
-            break;
-          case 'lock':
-            handleLock();
-            break;
-          case 'user':
-            goUserCenter();
-            break;
-          case 'api':
-            handleApi();
-            break;
-        }
-      }
-
-      return {
-        prefixCls,
-        t,
-        getUserInfo,
-        handleMenuClick,
-        getShowDoc,
-        getShowApi,
-        register,
-        registerApi,
-        getUseLockPage,
-      };
-    },
-  });
+  function handleMenuClick(e: MenuInfo) {
+    switch (e.key as MenuEvent) {
+      case 'logout':
+        handleLoginOut();
+        break;
+      case 'doc':
+        openDoc();
+        break;
+      case 'lock':
+        handleLock();
+        break;
+      case 'user':
+        goUserCenter();
+        break;
+      case 'api':
+        handleApi();
+        break;
+    }
+  }
 </script>
 <style lang="less">
   @prefix-cls: ~'@{namespace}-header-user-dropdown';
