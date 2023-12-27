@@ -40,6 +40,7 @@
 
   import { columns, searchFormSchema } from './Log.data';
   import { useMessage } from '/@/hooks/web/useMessage';
+  import { Base64 } from 'js-base64';
 
   export default defineComponent({
     name: 'LogManagement',
@@ -51,6 +52,9 @@
       const [registerTable, { reload, updateTableDataRecord }] = useTable({
         title: '列表',
         api: getLogList,
+        beforeFetch(params) {
+          return '?' + Base64.encode(JSON.stringify(params));
+        },
         defSort: {
           field: 'id',
           order: 'descend',

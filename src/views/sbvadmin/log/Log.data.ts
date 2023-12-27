@@ -78,7 +78,7 @@ export const searchFormSchema: FormSchema[] = [
     colProps: { span: 8 },
   },
   {
-    field: 'likeSearch',
+    field: 'description',
     label: '描述',
     component: 'Input',
     colProps: { span: 8 },
