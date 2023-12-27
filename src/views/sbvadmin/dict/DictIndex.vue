@@ -36,6 +36,7 @@
   import { getDictList, delDict } from '/@/api/sbvadmin/Dict';
   import DictModal from './DictModal.vue';
   import { columns, searchFormSchema } from './Dict.data';
+  import { Base64 } from 'js-base64';
 
   export default defineComponent({
     name: 'DictManagement',
@@ -46,6 +47,9 @@
       const [registerTable, { reload, updateTableDataRecord }] = useTable({
         title: '列表',
         api: getDictList,
+        beforeFetch(params) {
+          return '?' + Base64.encode(JSON.stringify(params));
+        },
         rowKey: 'id',
         columns,
         formConfig: {
