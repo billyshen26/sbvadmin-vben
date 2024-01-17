@@ -86,13 +86,14 @@
       });
 
       function updateAvatar({ source, data }) {
+        console.log(data);
         const userinfo = userStore.getUserInfo;
         userinfo.avatar = source;
         userStore.setUserInfo(userinfo); // 显示直接使用二进制流
         // userinfo.avatar = data.result; // 更新使用url地址
         const userAvatar = {
           id: userinfo.userId,
-          avatar: data.result,
+          avatar: data.result.url,
         };
 
         editUser(userAvatar)

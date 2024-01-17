@@ -118,8 +118,8 @@
     return isUploadingRef.value
       ? t('component.upload.uploading')
       : someError
-        ? t('component.upload.reUploadFailed')
-        : t('component.upload.startUpload');
+      ? t('component.upload.reUploadFailed')
+      : t('component.upload.startUpload');
   });
 
   // 上传前校验
@@ -245,9 +245,10 @@
     for (const item of fileListRef.value) {
       const { status, response } = item;
       if (status === UploadResultStatus.SUCCESS && response) {
+        console.log(response);
         // fileList.push(response.url);
         // fileList.push(responseData.url); TIPS:改动结构以适应SBVADMIN后台文件上传.待测试
-        fileList.push(response.result);
+        fileList.push(response?.result?.url);
       }
     }
     // 存在一个上传成功的即可保存
