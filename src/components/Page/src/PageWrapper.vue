@@ -1,5 +1,5 @@
 <template>
-  <div :class="getClass" ref="wrapperRef">
+  <div :class="getClass" :style="getStyle" ref="wrapperRef">
     <PageHeader
       :ghost="ghost"
       :title="title"
@@ -34,25 +34,25 @@
   </div>
 </template>
 <script lang="ts" setup>
+  import { PageWrapperFixedHeightKey } from '@/enums/pageEnum';
+  import { useContentHeight } from '@/hooks/web/useContentHeight';
+  import { useDesign } from '@/hooks/web/useDesign';
+  import { propTypes } from '@/utils/propTypes';
+  import { PageHeader } from 'ant-design-vue';
+  import { omit, debounce } from 'lodash-es';
+  import { useElementSize } from '@vueuse/core';
   import {
     CSSProperties,
     PropType,
-    provide,
     computed,
-    watch,
+    provide,
     ref,
     unref,
     useAttrs,
     useSlots,
+    watch,
   } from 'vue';
   import PageFooter from './PageFooter.vue';
-  import { useDesign } from '@/hooks/web/useDesign';
-  import { propTypes } from '@/utils/propTypes';
-  import { omit } from 'lodash-es';
-  import { PageHeader } from 'ant-design-vue';
-  import { useContentHeight } from '@/hooks/web/useContentHeight';
-  import { useLayoutHeight } from '@/layouts/default/content/useContentViewHeight';
-  import { PageWrapperFixedHeightKey } from '@/enums/pageEnum';
 
   defineOptions({
     name: 'PageWrapper',
@@ -83,6 +83,9 @@
   const headerRef = ref(null);
   const contentRef = ref(null);
   const footerRef = ref(null);
+
+  const { height } = useElementSize(wrapperRef);
+
   const { prefixCls } = useDesign('page-wrapper');
 
   provide(
@@ -102,6 +105,7 @@
     [contentRef],
     getUpwardSpace,
   );
+  const debounceRedoHeight = debounce(redoHeight, 50);
   setCompensation({ useLayoutFooter: true, elements: [footerRef] });
 
   const getClass = computed(() => {
@@ -114,7 +118,13 @@
     ];
   });
 
-  const { headerHeightRef } = useLayoutHeight();
+  const getStyle = computed(() => {
+    const { contentFullHeight, fixedHeight } = props;
+    return {
+      ...(contentFullHeight && fixedHeight ? { height: '100%' } : {}),
+    };
+  });
+
   const getHeaderStyle = computed((): CSSProperties => {
     const { headerSticky } = props;
     if (!headerSticky) {
@@ -123,7 +133,8 @@
 
     return {
       position: 'sticky',
-      top: `${unref(headerHeightRef)}px`,
+      top: 0,
+      zIndex: 99,
       ...props.headerStyle,
     };
   });
@@ -173,6 +184,11 @@
       immediate: true,
     },
   );
+
+  watch(height, () => {
+    const { contentFullHeight, fixedHeight } = props;
+    contentFullHeight && fixedHeight && debounceRedoHeight();
+  });
 </script>
 <style lang="less">
   @prefix-cls: ~'@{namespace}-page-wrapper';
