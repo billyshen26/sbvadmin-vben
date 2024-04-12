@@ -96,8 +96,10 @@ export const formSchema: FormSchema[] = [
       labelField: 'typeName',
       valueField: 'type',
       onChange: (e: any) => {
-        type.value = e;
-        console.log(e);
+        if (e != undefined) {
+          type.value = typeof e == 'object' ? e.value : e;
+        }
+        console.log(e, type.value);
       },
     },
     required: true,

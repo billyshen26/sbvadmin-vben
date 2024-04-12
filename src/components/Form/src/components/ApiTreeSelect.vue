@@ -61,7 +61,9 @@
   watch(
     () => props.params,
     () => {
-      !unref(isFirstLoaded) && fetch();
+      // !unref(isFirstLoaded) && fetch();
+      isFirstLoaded.value = false;
+      !unref(isFirstLoaded) && fetch(); //参数变化 加载数据
     },
     { deep: true },
   );
