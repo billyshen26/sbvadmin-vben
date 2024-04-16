@@ -1,4 +1,4 @@
-import { defHttp } from '/@/utils/http/axios';
+import { defHttp } from '@/utils/http/axios';
 import {
   User,
   UserList,
@@ -33,6 +33,8 @@ export const editUser = (data: any) => defHttp.put<User>({ url: Api.Users + '/' 
 export const deleteUser = (id: number) => defHttp.delete({ url: Api.Users + '/' + id });
 export const changePassword = (data: any) =>
   defHttp.post<User>({ url: Api.Users + '/changePassword', data });
+export const getAuthCode = (params: UserParams) =>
+  defHttp.get<String>({ url: '/getAuthCode', params });
 
 /**
  * @description: 权限相关

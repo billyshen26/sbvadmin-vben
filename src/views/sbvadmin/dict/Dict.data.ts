@@ -1,5 +1,5 @@
-import { BasicColumn, FormSchema } from '/@/components/Table';
-import { getDictTypes, getDictByType } from '/@/api/sbvadmin/Dict';
+import { BasicColumn, FormSchema } from '@/components/Table';
+import { getDictTypes, getDictByType } from '@/api/sbvadmin/Dict';
 import { ref } from 'vue';
 
 const type = ref<String>('');

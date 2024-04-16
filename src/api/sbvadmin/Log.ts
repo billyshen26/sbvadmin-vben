@@ -1,4 +1,4 @@
-import { defHttp } from '/@/utils/http/axios';
+import { defHttp } from '@/utils/http/axios';
 import { Log, LogParams, LogList } from './model/LogModel';
 
 enum Api {

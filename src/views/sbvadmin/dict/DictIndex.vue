@@ -31,9 +31,9 @@
 </template>
 <script lang="ts">
   import { defineComponent, reactive } from 'vue';
-  import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { useModal } from '/@/components/Modal';
-  import { getDictList, delDict } from '/@/api/sbvadmin/Dict';
+  import { BasicTable, useTable, TableAction } from '@/components/Table';
+  import { useModal } from '@/components/Modal';
+  import { getDictList, delDict } from '@/api/sbvadmin/Dict';
   import DictModal from './DictModal.vue';
   import { columns, searchFormSchema } from './Dict.data';
   import { Base64 } from 'js-base64';

@@ -6,6 +6,7 @@ import type {
 } from 'ant-design-vue/lib/form/interface';
 import { ref, computed, unref, Ref } from 'vue';
 import { useI18n } from '@/hooks/web/useI18n';
+import { string } from 'vue-types';
 
 export enum LoginStateEnum {
   LOGIN,
@@ -56,10 +57,22 @@ export function useFormRules(formData?: Recordable) {
   const getAccountFormRule = computed(() => createRule(t('sys.login.accountPlaceholder')));
   const getPasswordFormRule = computed(() => createRule(t('sys.login.passwordPlaceholder')));
   const getSmsFormRule = computed(() => createRule(t('sys.login.smsPlaceholder')));
-  const getMobileFormRule = computed(() => createRule(t('sys.login.mobilePlaceholder')));
+  // const getMobileFormRule = computed(() => createRule(t('sys.login.mobilePlaceholder')));
 
   const validatePolicy = async (_: RuleObject, value: boolean) => {
     return !value ? Promise.reject(t('sys.login.policyPlaceholder')) : Promise.resolve();
+  };
+
+  const validatePhone = async (_: RuleObject, value: string) => {
+    console.log(string);
+    const reg = new RegExp(/^1[3|4|5|7|8]\d{9}$/);
+    if (!value) {
+      return Promise.reject(t('sys.login.mobilePlaceholder'));
+    }
+    if (!reg.test(value)) {
+      return Promise.reject(t('sys.login.errorMobile'));
+    }
+    return Promise.resolve();
   };
 
   const validateConfirmPassword = (password: string) => {
@@ -78,12 +91,12 @@ export function useFormRules(formData?: Recordable) {
     const accountFormRule = unref(getAccountFormRule);
     const passwordFormRule = unref(getPasswordFormRule);
     const smsFormRule = unref(getSmsFormRule);
-    const mobileFormRule = unref(getMobileFormRule);
+    // const mobileFormRule = unref(getMobileFormRule);
 
-    const mobileRule = {
-      sms: smsFormRule,
-      mobile: mobileFormRule,
-    };
+    // const mobileRule = {
+    //   sms: smsFormRule,
+    //   mobile: mobileFormRule,
+    // };
     switch (unref(currentState)) {
       // register form rules
       case LoginStateEnum.REGISTER:
@@ -94,19 +107,24 @@ export function useFormRules(formData?: Recordable) {
             { validator: validateConfirmPassword(formData?.password), trigger: 'change' },
           ],
           policy: [{ validator: validatePolicy, trigger: 'change' }],
-          ...mobileRule,
+          mobile: [{ validator: validatePhone, trigger: 'change' }],
+          sms: smsFormRule,
         };
 
       // reset password form rules
       case LoginStateEnum.RESET_PASSWORD:
         return {
           account: accountFormRule,
-          ...mobileRule,
+          mobile: [{ validator: validatePhone, trigger: 'change' }],
+          sms: smsFormRule,
         };
 
       // mobile form rules
       case LoginStateEnum.MOBILE:
-        return mobileRule;
+        return {
+          mobile: [{ validator: validatePhone, trigger: 'change' }],
+          sms: smsFormRule,
+        };
 
       // login form rules
       default:
