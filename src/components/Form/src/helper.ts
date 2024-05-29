@@ -2,7 +2,7 @@ import type { Rule as ValidationRule } from 'ant-design-vue/lib/form/interface';
 import type { ComponentType } from './types';
 import { useI18n } from '@/hooks/web/useI18n';
 import { dateUtil } from '@/utils/dateUtil';
-import { isNumber, isObject } from '@/utils/is';
+import { isObject } from '@/utils/is';
 
 const { t } = useI18n();
 
@@ -32,7 +32,7 @@ export function createPlaceholderMessage(component: ComponentType) {
 const DATE_TYPE = ['DatePicker', 'MonthPicker', 'WeekPicker', 'TimePicker'];
 
 function genType() {
-  return [...DATE_TYPE, 'RangePicker'];
+  return [...DATE_TYPE, 'RangePicker', 'TimeRangePicker'];
 }
 
 export function setComponentRuleType(
@@ -45,7 +45,7 @@ export function setComponentRuleType(
   }
   if (['DatePicker', 'MonthPicker', 'WeekPicker', 'TimePicker'].includes(component)) {
     rule.type = valueFormat ? 'string' : 'object';
-  } else if (['RangePicker', 'Upload', 'CheckboxGroup', 'TimePicker'].includes(component)) {
+  } else if (['RangePicker', 'Upload', 'CheckboxGroup'].includes(component)) {
     rule.type = 'array';
   } else if (['InputNumber'].includes(component)) {
     rule.type = 'number';
@@ -68,14 +68,6 @@ export const defaultValueComponents = [
   'InputSearch',
   'InputTextArea',
 ];
-
-export function handleInputNumberValue(component?: ComponentType, val?: any) {
-  if (!component) return val;
-  if (defaultValueComponents.includes(component)) {
-    return val && isNumber(val) ? `${val}` : val;
-  }
-  return val;
-}
 
 /**
  * 时间字段

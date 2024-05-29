@@ -49,14 +49,14 @@ export function useMenuSearch(refs: Ref<HTMLElement[]>, scrollWrap: Ref, emit: A
   function search(e: ChangeEvent) {
     e?.stopPropagation();
     const key = e.target.value;
-    keyword.value = key.trim();
+    keyword.value = key.trim().toLowerCase();
     if (!key) {
       searchResult.value = [];
       return;
     }
     const reg = createSearchReg(unref(keyword));
     const filterMenu = filter(menuList, (item) => {
-      return reg.test(item.name) && !item.hideMenu;
+      return reg.test(item.name?.toLowerCase()) && !item.hideMenu;
     });
     searchResult.value = handlerSearchResult(filterMenu, reg);
     activeIndex.value = 0;
@@ -66,7 +66,11 @@ export function useMenuSearch(refs: Ref<HTMLElement[]>, scrollWrap: Ref, emit: A
     const ret: SearchResult[] = [];
     filterMenu.forEach((item) => {
       const { name, path, icon, children, hideMenu, meta } = item;
-      if (!hideMenu && reg.test(name) && (!children?.length || meta?.hideChildrenInMenu)) {
+      if (
+        !hideMenu &&
+        reg.test(name?.toLowerCase()) &&
+        (!children?.length || meta?.hideChildrenInMenu)
+      ) {
         ret.push({
           name: parent?.name ? `${parent.name} > ${name}` : name,
           path,
