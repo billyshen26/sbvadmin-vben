@@ -540,15 +540,15 @@
           label:
             typeof col.title === 'string'
               ? col.title
-              : col.customTitle === 'string'
-              ? col.customTitle
-              : '',
+              : typeof col.customTitle === 'string'
+                ? col.customTitle
+                : '',
           value:
             typeof col.dataIndex === 'string'
               ? col.dataIndex
-              : col.title === 'string'
-              ? col.title
-              : '',
+              : typeof col.title === 'string'
+                ? col.title
+                : '',
           column: {
             defaultHidden: col.defaultHidden,
           },

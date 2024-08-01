@@ -277,6 +277,7 @@
           field,
           changeEvent = 'change',
           valueField,
+          valueFormat,
         } = props.schema;
 
         const isCheck = component && ['Switch', 'Checkbox'].includes(component);
@@ -288,7 +289,10 @@
             const [e] = args;
 
             const target = e ? e.target : null;
-            const value = target ? (isCheck ? target.checked : target.value) : e;
+            let value = target ? (isCheck ? target.checked : target.value) : e;
+            if (isFunction(valueFormat)) {
+              value = valueFormat({ ...unref(getValues), value });
+            }
             props.setFormModel(field, value, props.schema);
 
             if (propsData[eventKey]) {
