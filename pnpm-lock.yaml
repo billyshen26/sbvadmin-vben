@@ -59,6 +59,9 @@ importers:
       html2canvas:
         specifier: ^1.4.1
         version: 1.4.1
+      js-base64:
+        specifier: ^3.7.5
+        version: 3.7.7
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -4524,6 +4527,9 @@ packages:
 
   js-base64@2.6.4:
     resolution: {integrity: sha512-pZe//GGmwJndub7ZghVHz7vjb2LgC1m8B07Au3eYqeqv9emhESByMXxaEgkUkEqJe87oBbSniGYoQNIBklc7IQ==}
+
+  js-base64@3.7.7:
+    resolution: {integrity: sha512-7rCnleh0z2CkXhH67J8K1Ytz0b2Y+yxTPL+/KOJoa20hfnVQ/3/T6W/KflYI4bRHRagNeXeU2bkNGI3v1oS/lw==}
 
   js-beautify@1.15.1:
     resolution: {integrity: sha512-ESjNzSlt/sWE8sciZH8kBF8BPlwXPwhR6pWKAw8bw4Bwj+iZcnKW6ONWUutJ7eObuBZQpiIb8S7OYspWrKt7rA==}
@@ -12165,6 +12171,8 @@ snapshots:
   joycon@3.1.1: {}
 
   js-base64@2.6.4: {}
+
+  js-base64@3.7.7: {}
 
   js-beautify@1.15.1:
     dependencies:
