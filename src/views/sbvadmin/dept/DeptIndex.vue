@@ -35,12 +35,12 @@
 </template>
 <script lang="ts">
   import { defineComponent, reactive } from 'vue';
-  import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { useModal } from '/@/components/Modal';
-  import { getDeptList, delDept } from '/@/api/sbvadmin/Dept';
+  import { BasicTable, useTable, TableAction } from '@/components/Table';
+  import { useModal } from '@/components/Modal';
+  import { getDeptList, delDept } from '@/api/sbvadmin/Dept';
   import DeptModal from './DeptModal.vue';
   import { columns, searchFormSchema } from './Dept.data';
-  import { Authority } from '/@/components/Authority';
+  import { Authority } from '@/components/Authority';
 
   export default defineComponent({
     name: 'DeptManagement',

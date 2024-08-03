@@ -62,18 +62,18 @@
 <script lang="ts">
   import { defineComponent, reactive } from 'vue';
 
-  import { BasicTable, useTable, TableAction } from '/@/components/Table';
+  import { BasicTable, useTable, TableAction } from '@/components/Table';
   // import { getAccountList, deleteAccount } from '/@/api/demo/system';
-  import { getUserList, deleteUser } from '/@/api/sbvadmin/System';
-  import { PageWrapper } from '/@/components/Page';
+  import { getUserList, deleteUser } from '@/api/sbvadmin/System';
+  import { PageWrapper } from '@/components/Page';
   import DeptTree from './DeptTree.vue';
-  import { Authority } from '/@/components/Authority';
-  import { useModal } from '/@/components/Modal';
+  import { Authority } from '@/components/Authority';
+  import { useModal } from '@/components/Modal';
   import AccountModal from './UserModal.vue';
-
   import { columns, searchFormSchema } from './user.data';
-  import { useGo } from '/@/hooks/web/usePage';
+  import { useGo } from '@/hooks/web/usePage';
   import { Avatar, Tag } from 'ant-design-vue';
+  import { Base64 } from 'js-base64';
 
   export default defineComponent({
     name: 'AccountManagement',
@@ -95,6 +95,9 @@
       const [registerTable, { reload }] = useTable({
         title: '账号列表',
         api: getUserList,
+        beforeFetch(params) {
+          return '?' + Base64.encode(JSON.stringify(params));
+        },
         rowKey: 'id',
         columns,
         formConfig: {
