@@ -73,7 +73,6 @@
   import { columns, searchFormSchema } from './user.data';
   import { useGo } from '@/hooks/web/usePage';
   import { Avatar, Tag } from 'ant-design-vue';
-  import { Base64 } from 'js-base64';
 
   export default defineComponent({
     name: 'AccountManagement',
@@ -92,12 +91,9 @@
       const go = useGo();
       const [registerModal, { openModal }] = useModal();
       const searchInfo = reactive<Recordable>({});
-      const [registerTable, { reload }] = useTable({
+      const [registerTable, { reload, updateTableDataRecord }] = useTable({
         title: '账号列表',
         api: getUserList,
-        beforeFetch(params) {
-          return '?' + Base64.encode(JSON.stringify(params));
-        },
         rowKey: 'id',
         columns,
         formConfig: {
@@ -149,16 +145,15 @@
           });
       }
 
-      function handleSuccess() {
-        reload();
-        // if (isUpdate) {
-        //   // 演示不刷新表格直接更新内部数据。
-        //   // 注意：updateTableDataRecord要求表格的rowKey属性为string并且存在于每一行的record的keys中
-        //   const result = updateTableDataRecord(values.id, values);
-        //   console.log(result);
-        // } else {
-        //   reload();
-        // }
+      function handleSuccess({ isUpdate, values }) {
+        if (isUpdate) {
+          // 演示不刷新表格直接更新内部数据。
+          // 注意：updateTableDataRecord要求表格的rowKey属性为string并且存在于每一行的record的keys中
+          const result = updateTableDataRecord(values.id, values);
+          console.log(result);
+        } else {
+          reload();
+        }
       }
 
       function handleSelect(deptId = '') {
